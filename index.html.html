@@ -252,33 +252,41 @@
 <!-- PROFIL -->
 <section class="sec" id="profil">
   <div class="container">
-    <div class="sec-head"><h2 id="profilTitle">Profil Ranting Raflesia</h2></div>
+    <div class="sec-head">
+      <h2 id="profilTitle">Profil Ranting Raflesia</h2>
+      <p id="profilDesc">Informasi lengkap tentang visi, misi, struktur organisasi, dan program kerja IBI Ranting Raflesia.</p>
+    </div>
     <div class="grid g-3">
+      <!-- VISI & MISI -->
       <div class="profil">
         <i class="fas fa-eye big"></i>
         <h3>Visi &amp; Misi</h3>
-        <p id="visi"><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
+        <p id="visiText"><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
         <br>
-        <p id="misi"><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
+        <p id="misiText"><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
       </div>
+
+      <!-- STRUKTUR ORGANISASI -->
       <div class="profil">
         <i class="fas fa-users big"></i>
         <h3>Struktur Organisasi</h3>
         <ul id="strukturOrganisasi">
-          <li><strong>Ketua:</strong> Nurhayati, S.ST., M.Kes</li>
-          <li><strong>Sekretaris:</strong> Dewi Sartika, S.ST.</li>
-          <li><strong>Bendahara:</strong> Rina Marlina, S.ST.</li>
-          <li><strong>Koord. Bidang:</strong> Yuni Astuti, S.ST., M.Kes</li>
+          <li><strong>Ketua:</strong> <span id="struktur_ketua">Nurhayati, S.ST., M.Kes</span></li>
+          <li><strong>Sekretaris:</strong> <span id="struktur_sekretaris">Dewi Sartika, S.ST.</span></li>
+          <li><strong>Bendahara:</strong> <span id="struktur_bendahara">Rina Marlina, S.ST.</span></li>
+          <li><strong>Koord. Bidang:</strong> <span id="struktur_koordinator">Yuni Astuti, S.ST., M.Kes</span></li>
         </ul>
       </div>
+
+      <!-- PROGRAM KERJA -->
       <div class="profil">
         <i class="fas fa-bullseye big"></i>
         <h3>Program Kerja</h3>
         <ul id="programKerja">
-          <li>Pendidikan &amp; Pelatihan Berkelanjutan</li>
-          <li>Advokasi Kebijakan Kesehatan</li>
-          <li>Pengabdian Masyarakat</li>
-          <li>Peningkatan Kesejahteraan Anggota</li>
+          <li id="program_1">Pendidikan &amp; Pelatihan Berkelanjutan</li>
+          <li id="program_2">Advokasi Kebijakan Kesehatan</li>
+          <li id="program_3">Pengabdian Masyarakat</li>
+          <li id="program_4">Peningkatan Kesejahteraan Anggota</li>
         </ul>
       </div>
     </div>
@@ -389,44 +397,45 @@
 <script>
   // ============================================
   // KONFIGURASI GOOGLE SHEETS
-  // MENGGUNAKAN URL YANG ANDA BERIKAN
   // ============================================
   const CONFIG = {
-    // Gunakan URL publikasi langsung dari Google Sheets
     SHEET_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTnlE-MJr5ZBPemfSgAissme5faWDTCr_JwbEpOVIRLjN_Hmqh6ZjIlgI4Go8wMUUdCUEJORlWkAge/pub?output=csv'
   };
 
   // ============================================
-  // FUNGSI LOAD DATA DARI GOOGLE SHEETS
+  // FUNGSI LOAD DATA
   // ============================================
   async function loadData() {
     try {
-      // Load data langsung dari URL publikasi
-      // Karena URL sudah lengkap dengan format CSV, kita fetch langsung
       const response = await axios.get(CONFIG.SHEET_URL);
       const csv = response.data;
-      
-      // Parse CSV menjadi array of objects
       const allData = parseCSV(csv);
       
-      // Pisahkan data berdasarkan sheet (berdasarkan struktur kolom)
-      // Kita deteksi berdasarkan header yang ada
+      // Pisahkan data berdasarkan sheet
       const beritaData = allData.filter(row => row.Judul && row.Deskripsi && row.Tanggal);
       const eventData = allData.filter(row => row['Nama Event'] && row['Tanggal Mulai']);
       const pengurusData = allData.filter(row => row.Nama && row.Jabatan);
       const prestasiData = allData.filter(row => row['Nama Prestasi'] && row.Pencapaian);
       const karyaData = allData.filter(row => row['Judul Karya'] && row.Deskripsi);
       const infoData = allData.filter(row => row.Key && row.Value);
+      const profilData = allData.filter(row => 
+        row.Key && (
+          row.Key.includes('visi') || 
+          row.Key.includes('misi') || 
+          row.Key.includes('program_') || 
+          row.Key.includes('struktur_')
+        )
+      );
 
-      // Update konten
+      // Update semua konten
       updateBerita(beritaData);
       updateEvent(eventData);
       updatePengurus(pengurusData);
       updatePrestasi(prestasiData);
       updateKarya(karyaData);
       updateInfo(infoData);
+      updateProfil(profilData);
 
-      // Sembunyikan loading
       document.getElementById('loading').classList.add('hide');
 
     } catch (error) {
@@ -445,14 +454,14 @@
     }
   }
 
-  // Fungsi parse CSV sederhana
+  // ============================================
+  // FUNGSI PARSE CSV
+  // ============================================
   function parseCSV(csv) {
     const lines = csv.split('\n').filter(line => line.trim() !== '');
     if (lines.length < 2) return [];
     
-    // Parse header
     const headers = parseCSVLine(lines[0]);
-    
     const result = [];
     for (let i = 1; i < lines.length; i++) {
       const values = parseCSVLine(lines[i]);
@@ -465,7 +474,6 @@
     return result;
   }
 
-  // Fungsi parse line CSV (handle quotes)
   function parseCSVLine(line) {
     const result = [];
     let current = '';
@@ -487,9 +495,51 @@
   }
 
   // ============================================
-  // FUNGSI UPDATE KONTEN (sama seperti sebelumnya)
+  // FUNGSI UPDATE KONTEN
   // ============================================
 
+  // UPDATE PROFIL (Visi Misi, Struktur, Program Kerja)
+  function updateProfil(data) {
+    const profil = {};
+    data.forEach(item => {
+      profil[item.Key] = item.Value;
+    });
+
+    // Update Visi
+    if (profil.visi) {
+      document.getElementById('visiText').innerHTML = `<strong>Visi:</strong> ${profil.visi}`;
+    }
+
+    // Update Misi
+    if (profil.misi) {
+      document.getElementById('misiText').innerHTML = `<strong>Misi:</strong> ${profil.misi}`;
+    }
+
+    // Update Struktur Organisasi
+    if (profil.struktur_ketua) {
+      document.getElementById('struktur_ketua').textContent = profil.struktur_ketua;
+    }
+    if (profil.struktur_sekretaris) {
+      document.getElementById('struktur_sekretaris').textContent = profil.struktur_sekretaris;
+    }
+    if (profil.struktur_bendahara) {
+      document.getElementById('struktur_bendahara').textContent = profil.struktur_bendahara;
+    }
+    if (profil.struktur_koordinator) {
+      document.getElementById('struktur_koordinator').textContent = profil.struktur_koordinator;
+    }
+
+    // Update Program Kerja (maksimal 4 program)
+    const programKeys = ['program_kerja_1', 'program_kerja_2', 'program_kerja_3', 'program_kerja_4'];
+    programKeys.forEach((key, index) => {
+      const element = document.getElementById(`program_${index + 1}`);
+      if (element && profil[key]) {
+        element.textContent = profil[key];
+      }
+    });
+  }
+
+  // UPDATE BERITA
   function updateBerita(data) {
     const container = document.getElementById('beritaContainer');
     const aktifBerita = data.filter(item => 
@@ -519,6 +569,7 @@
     `).join('');
   }
 
+  // UPDATE EVENT
   function updateEvent(data) {
     const container = document.getElementById('eventContainer');
     const aktifEvent = data.filter(item => {
@@ -543,15 +594,14 @@
     `).join('');
   }
 
+  // UPDATE PENGURUS (jika ada data tambahan dari sheet Pengurus)
   function updatePengurus(data) {
-    const container = document.getElementById('strukturOrganisasi');
-    if (data.length === 0) return;
-    
-    container.innerHTML = data.map(item => `
-      <li><strong>${item.Jabatan}:</strong> ${item.Nama}${item.Bidang ? ` (${item.Bidang})` : ''}</li>
-    `).join('');
+    // Jika ada data pengurus dari sheet terpisah, update di sini
+    // Saat ini struktur organisasi diambil dari sheet Profil
+    // Fungsi ini bisa digunakan untuk data tambahan jika diperlukan
   }
 
+  // UPDATE PRESTASI
   function updatePrestasi(data) {
     const container = document.getElementById('prestasiContainer');
     const aktifPrestasi = data.filter(item => {
@@ -574,6 +624,7 @@
     `).join('');
   }
 
+  // UPDATE KARYA
   function updateKarya(data) {
     const container = document.getElementById('karyaContainer');
     if (data.length === 0) {
@@ -593,6 +644,7 @@
     `).join('');
   }
 
+  // UPDATE INFO UMUM
   function updateInfo(data) {
     const info = {};
     data.forEach(item => {
@@ -608,6 +660,8 @@
     // Update Section Titles
     if (info.berita_title) document.getElementById('beritaTitle').textContent = info.berita_title;
     if (info.berita_desc) document.getElementById('beritaDesc').textContent = info.berita_desc;
+    if (info.profil_title) document.getElementById('profilTitle').textContent = info.profil_title;
+    if (info.profil_desc) document.getElementById('profilDesc').textContent = info.profil_desc;
     if (info.event_title) document.getElementById('eventTitle').textContent = info.event_title;
     if (info.event_desc) document.getElementById('eventDesc').textContent = info.event_desc;
     if (info.karya_title) document.getElementById('karyaTitle').textContent = info.karya_title;
@@ -618,10 +672,6 @@
     if (info.keanggotaan_desc) document.getElementById('keanggotaanDesc').textContent = info.keanggotaan_desc;
     if (info.kontak_title) document.getElementById('kontakTitle').textContent = info.kontak_title;
     if (info.kontak_desc) document.getElementById('kontakDesc').textContent = info.kontak_desc;
-
-    // Update Visi Misi
-    if (info.visi) document.getElementById('visi').innerHTML = `<strong>Visi:</strong> ${info.visi}`;
-    if (info.misi) document.getElementById('misi').innerHTML = `<strong>Misi:</strong> ${info.misi}`;
 
     // Update Kontak
     if (info.alamat) document.getElementById('alamat').innerHTML = info.alamat.replace(/\n/g, '<br>');
@@ -671,8 +721,6 @@
   // JALANKAN LOAD DATA
   // ============================================
   document.addEventListener('DOMContentLoaded', loadData);
-  
-  // Auto refresh setiap 5 menit
   setInterval(loadData, 300000);
 </script>
 
