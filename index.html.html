@@ -20,11 +20,13 @@
   img{max-width:100%;display:block}
   .container{width:92%;max-width:1200px;margin:0 auto}
 
+  /* LOADING */
   .loading{position:fixed;inset:0;background:#fff;z-index:9999;display:grid;place-items:center;transition:opacity .5s}
   .loading.hide{opacity:0;pointer-events:none}
   .loading .spinner{width:50px;height:50px;border:4px solid var(--light);border-top:4px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
+  /* HEADER */
   header{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.05);transition:.3s}
   header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.1);padding:2px 0}
   nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
@@ -39,6 +41,7 @@
   .nav-links a:hover::after{width:100%}
   .menu-btn{display:none;background:none;border:none;color:var(--primary);font-size:26px;cursor:pointer}
 
+  /* MOBILE MENU */
   .mobile-menu{position:fixed;inset:0;z-index:1100;visibility:hidden;opacity:0;transition:.3s}
   .mobile-menu.open{visibility:visible;opacity:1}
   .mobile-menu .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.4)}
@@ -52,6 +55,7 @@
   .mobile-menu a{display:block;padding:14px 0;font-weight:600;color:#3a2a30}
   .mobile-menu a:hover{color:var(--primary)}
 
+  /* HERO */
   .hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:120px 0 80px;position:relative;
     background:linear-gradient(135deg,rgba(94,18,48,.92),rgba(139,30,63,.88)),url('https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1600&q=80') center/cover}
   .hero .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 18px;border-radius:999px;font-size:13px;font-weight:500;margin-bottom:22px}
@@ -69,6 +73,7 @@
   .scroll-down{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#fff;font-size:28px;animation:bd 2s infinite}
   @keyframes bd{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
 
+  /* SECTIONS */
   section.sec{padding:80px 0}
   section.alt{background:var(--light)}
   .sec-head{text-align:center;max-width:720px;margin:0 auto 50px}
@@ -139,18 +144,16 @@
   .weblink{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)}
   .weblink a{color:var(--primary);font-weight:500}
 
+  /* FOOTER */
   footer{background:linear-gradient(135deg,#3d0c20,var(--primary));color:#fff;padding:26px 0;text-align:center;font-size:14px}
   footer .container{opacity:.9}
 
+  /* BACK TO TOP */
   .top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 8px 20px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:.3s;z-index:900}
   .top.show{opacity:1;visibility:visible}
   .top:hover{background:var(--accent);color:var(--primary);transform:translateY(-4px)}
 
-  .update-notif{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#5e1230;color:#fff;padding:12px 24px;border-radius:50px;box-shadow:0 4px 20px rgba(0,0,0,.2);z-index:1000;display:none;align-items:center;gap:10px;font-size:14px}
-  .update-notif.show{display:flex}
-  .update-notif i{color:var(--accent)}
-  .update-notif .close{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;margin-left:5px}
-
+  /* RESPONSIVE */
   @media (max-width:960px){
     .g-3{grid-template-columns:repeat(2,1fr)}
   }
@@ -166,16 +169,12 @@
 </head>
 <body>
 
+<!-- LOADING -->
 <div class="loading" id="loading">
   <div class="spinner"></div>
 </div>
 
-<div class="update-notif" id="updateNotif">
-  <i class="fas fa-sync-alt fa-spin"></i>
-  <span>Data berhasil diperbarui!</span>
-  <button class="close" onclick="this.parentElement.classList.remove('show')">&times;</button>
-</div>
-
+<!-- HEADER -->
 <header id="header">
   <div class="container">
     <nav>
@@ -201,6 +200,7 @@
   </div>
 </header>
 
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="backdrop" onclick="closeMenu()"></div>
   <aside>
@@ -221,6 +221,7 @@
   </aside>
 </div>
 
+<!-- HERO -->
 <section class="hero" id="beranda">
   <div class="container">
     <div class="badge"><i class="fas fa-sparkles"></i> <span id="heroBadge">Ikatan Bidan Indonesia</span></div>
@@ -235,94 +236,108 @@
   <a href="#berita" class="scroll-down" aria-label="Scroll"><i class="fas fa-chevron-down"></i></a>
 </section>
 
+<!-- BERITA -->
 <section class="sec alt" id="berita">
   <div class="container">
     <div class="sec-head">
       <h2 id="beritaTitle">Berita Terkini</h2>
       <p id="beritaDesc">Informasi terbaru seputar kegiatan dan pengumuman IBI Ranting Raflesia Kota Bengkulu.</p>
     </div>
-    <div class="grid g-3" id="beritaContainer"></div>
+    <div class="grid g-3" id="beritaContainer">
+      <!-- Berita akan di-load dari Google Sheets -->
+    </div>
   </div>
 </section>
 
+<!-- PROFIL -->
 <section class="sec" id="profil">
   <div class="container">
-    <div class="sec-head">
-      <h2 id="profilTitle">Profil Ranting Raflesia</h2>
-      <p id="profilDesc">Informasi lengkap tentang visi, misi, struktur organisasi, dan program kerja IBI Ranting Raflesia.</p>
-    </div>
+    <div class="sec-head"><h2 id="profilTitle">Profil Ranting Raflesia</h2></div>
     <div class="grid g-3">
       <div class="profil">
         <i class="fas fa-eye big"></i>
         <h3>Visi &amp; Misi</h3>
-        <p id="visiText"><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
+        <p id="visi"><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
         <br>
-        <p id="misiText"><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
+        <p id="misi"><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
       </div>
       <div class="profil">
         <i class="fas fa-users big"></i>
         <h3>Struktur Organisasi</h3>
         <ul id="strukturOrganisasi">
-          <li><strong>Ketua:</strong> <span id="struktur_ketua">Nurhayati, S.ST., M.Kes</span></li>
-          <li><strong>Sekretaris:</strong> <span id="struktur_sekretaris">Dewi Sartika, S.ST.</span></li>
-          <li><strong>Bendahara:</strong> <span id="struktur_bendahara">Rina Marlina, S.ST.</span></li>
-          <li><strong>Koord. Bidang:</strong> <span id="struktur_koordinator">Yuni Astuti, S.ST., M.Kes</span></li>
+          <li><strong>Ketua:</strong> Nurhayati, S.ST., M.Kes</li>
+          <li><strong>Sekretaris:</strong> Dewi Sartika, S.ST.</li>
+          <li><strong>Bendahara:</strong> Rina Marlina, S.ST.</li>
+          <li><strong>Koord. Bidang:</strong> Yuni Astuti, S.ST., M.Kes</li>
         </ul>
       </div>
       <div class="profil">
         <i class="fas fa-bullseye big"></i>
         <h3>Program Kerja</h3>
         <ul id="programKerja">
-          <li id="program_1">Pendidikan &amp; Pelatihan Berkelanjutan</li>
-          <li id="program_2">Advokasi Kebijakan Kesehatan</li>
-          <li id="program_3">Pengabdian Masyarakat</li>
-          <li id="program_4">Peningkatan Kesejahteraan Anggota</li>
+          <li>Pendidikan &amp; Pelatihan Berkelanjutan</li>
+          <li>Advokasi Kebijakan Kesehatan</li>
+          <li>Pengabdian Masyarakat</li>
+          <li>Peningkatan Kesejahteraan Anggota</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
+<!-- KEANGGOTAAN -->
 <section class="sec keangg" id="keanggotaan">
   <div class="container">
     <div class="sec-head">
       <h2 id="keanggotaanTitle">Info Keanggotaan</h2>
       <p id="keanggotaanDesc">Daftar menjadi anggota IBI Ranting Raflesia dan nikmati berbagai manfaat.</p>
     </div>
-    <div class="grid g-3" id="keanggotaanContainer"></div>
+    <div class="grid g-3" id="keanggotaanContainer">
+      <!-- Keanggotaan akan di-load dari Google Sheets -->
+    </div>
   </div>
 </section>
 
+<!-- EVENT -->
 <section class="sec alt" id="event">
   <div class="container">
     <div class="sec-head">
       <h2 id="eventTitle">Event</h2>
       <p id="eventDesc">Kegiatan dan acara mendatang dari IBI Ranting Raflesia.</p>
     </div>
-    <div class="grid g-3" id="eventContainer"></div>
+    <div class="grid g-3" id="eventContainer">
+      <!-- Event akan di-load dari Google Sheets -->
+    </div>
   </div>
 </section>
 
+<!-- KARYA -->
 <section class="sec" id="karya">
   <div class="container">
     <div class="sec-head">
       <h2 id="karyaTitle">Karya &amp; Inovasi</h2>
       <p id="karyaDesc">Berbagai inovasi dan karya bidan anggota Ranting Raflesia.</p>
     </div>
-    <div class="grid g-3" id="karyaContainer"></div>
+    <div class="grid g-3" id="karyaContainer">
+      <!-- Karya akan di-load dari Google Sheets -->
+    </div>
   </div>
 </section>
 
+<!-- PRESTASI -->
 <section class="sec alt" id="prestasi">
   <div class="container">
     <div class="sec-head">
       <h2 id="prestasiTitle">Prestasi</h2>
       <p id="prestasiDesc">Penghargaan dan prestasi yang telah diraih oleh IBI Ranting Raflesia.</p>
     </div>
-    <div class="grid g-3" id="prestasiContainer"></div>
+    <div class="grid g-3" id="prestasiContainer">
+      <!-- Prestasi akan di-load dari Google Sheets -->
+    </div>
   </div>
 </section>
 
+<!-- KONTAK -->
 <section class="sec" id="kontak">
   <div class="container">
     <div class="sec-head">
@@ -362,130 +377,95 @@
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="container" id="footerText">© 2025 IBI Ranting Raflesia Kota Bengkulu. All rights reserved.</div>
 </footer>
 
 <button class="top" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Ke atas"><i class="fas fa-arrow-up"></i></button>
 
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   // ============================================
-  // KONFIGURASI - KEMBALI KE GOOGLE SHEETS CSV
-  // MENGGUNAKAN PROXY CORS YANG PALING STABIL
+  // KONFIGURASI GOOGLE SHEETS
+  // MENGGUNAKAN URL YANG ANDA BERIKAN
   // ============================================
   const CONFIG = {
-    // Gunakan proxy corsproxy.io (lebih stabil)
-    SHEET_URL: 'https://corsproxy.io/?' + encodeURIComponent(
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTnlE-MJr5ZBPemfSgAissme5faWDTCr_JwbEpOVIRLjN_Hmqh6ZjIlgI4Go8wMUUdCUEJORlWkAge/pub?output=csv'
-    )
+    // Gunakan URL publikasi langsung dari Google Sheets
+    SHEET_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTnlE-MJr5ZBPemfSgAissme5faWDTCr_JwbEpOVIRLjN_Hmqh6ZjIlgI4Go8wMUUdCUEJORlWkAge/pub?output=csv'
   };
 
   // ============================================
-  // FUNGSI LOAD DATA
+  // FUNGSI LOAD DATA DARI GOOGLE SHEETS
   // ============================================
   async function loadData() {
     try {
-      const timestamp = new Date().getTime();
-      const url = `${CONFIG.SHEET_URL}&_=${timestamp}`;
+      // Load data langsung dari URL publikasi
+      // Karena URL sudah lengkap dengan format CSV, kita fetch langsung
+      const response = await axios.get(CONFIG.SHEET_URL);
+      const csv = response.data;
       
-      console.log('🔄 Mengambil data dari Google Sheets via proxy...');
-      
-      const response = await fetch(url, {
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status}`);
-      }
-      
-      const csv = await response.text();
-      console.log('📊 Data CSV diterima, panjang:', csv.length);
-      
+      // Parse CSV menjadi array of objects
       const allData = parseCSV(csv);
-      console.log('📋 Total data terparse:', allData.length);
       
-      // Pisahkan data berdasarkan sheet
+      // Pisahkan data berdasarkan sheet (berdasarkan struktur kolom)
+      // Kita deteksi berdasarkan header yang ada
       const beritaData = allData.filter(row => row.Judul && row.Deskripsi && row.Tanggal);
       const eventData = allData.filter(row => row['Nama Event'] && row['Tanggal Mulai']);
+      const pengurusData = allData.filter(row => row.Nama && row.Jabatan);
       const prestasiData = allData.filter(row => row['Nama Prestasi'] && row.Pencapaian);
       const karyaData = allData.filter(row => row['Judul Karya'] && row.Deskripsi);
       const infoData = allData.filter(row => row.Key && row.Value);
-      const profilData = allData.filter(row => 
-        row.Key && (
-          row.Key.includes('visi') || 
-          row.Key.includes('misi') || 
-          row.Key.includes('program_') || 
-          row.Key.includes('struktur_')
-        )
-      );
 
+      // Update konten
       updateBerita(beritaData);
       updateEvent(eventData);
+      updatePengurus(pengurusData);
       updatePrestasi(prestasiData);
       updateKarya(karyaData);
       updateInfo(infoData);
-      updateProfil(profilData);
 
+      // Sembunyikan loading
       document.getElementById('loading').classList.add('hide');
-      showNotification('✅ Data berhasil diperbarui!');
 
     } catch (error) {
-      console.error('❌ Error detail:', error);
-      
-      let errorMessage = 'Pastikan Google Sheets sudah dipublikasikan dengan benar.';
-      if (error.message.includes('HTTP')) {
-        errorMessage = `Server merespon: ${error.message}`;
-      } else if (error.message === 'Failed to fetch') {
-        errorMessage = 'Tidak bisa terhubung ke server. Coba gunakan proxy lain atau periksa koneksi internet.';
-      }
-      
+      console.error('Gagal memuat data:', error);
       document.getElementById('loading').innerHTML = `
         <div style="text-align:center;color:red;max-width:500px;">
           <i class="fas fa-exclamation-circle" style="font-size:40px;margin-bottom:10px;"></i>
           <h3 style="color:#5e1230;">Gagal memuat data</h3>
-          <p style="font-size:14px;margin:10px 0;">${errorMessage}</p>
+          <p style="font-size:14px;margin:10px 0;">Pastikan Google Sheets sudah dipublikasikan dengan benar.</p>
           <p style="font-size:12px;color:#999;">Error: ${error.message}</p>
-          <div style="margin-top:15px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-            <button onclick="location.reload()" style="padding:10px 30px;background:#5e1230;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:600;">
-              <i class="fas fa-sync"></i> Muat Ulang
-            </button>
-            <button onclick="window.location.href=window.location.href+'?force=1'" style="padding:10px 30px;background:#d4a574;color:#3a2410;border:none;border-radius:5px;cursor:pointer;font-weight:600;">
-              <i class="fas fa-bolt"></i> Force Load
-            </button>
-          </div>
-          <p style="font-size:11px;color:#999;margin-top:10px;">Jika gagal, coba buka di browser lain atau gunakan VPN</p>
+          <button onclick="location.reload()" style="margin-top:15px;padding:10px 30px;background:#5e1230;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:600;">
+            <i class="fas fa-sync"></i> Muat Ulang
+          </button>
         </div>
       `;
     }
   }
 
-  // ============================================
-  // FUNGSI PARSE CSV
-  // ============================================
+  // Fungsi parse CSV sederhana
   function parseCSV(csv) {
     const lines = csv.split('\n').filter(line => line.trim() !== '');
     if (lines.length < 2) return [];
     
+    // Parse header
     const headers = parseCSVLine(lines[0]);
-    const result = [];
     
+    const result = [];
     for (let i = 1; i < lines.length; i++) {
       const values = parseCSVLine(lines[i]);
       const obj = {};
       headers.forEach((header, index) => {
-        const cleanHeader = header.replace(/\r/g, '').trim();
-        const cleanValue = (values[index] || '').replace(/\r/g, '').trim();
-        obj[cleanHeader] = cleanValue;
+        obj[header] = values[index] || '';
       });
       result.push(obj);
     }
     return result;
   }
 
+  // Fungsi parse line CSV (handle quotes)
   function parseCSVLine(line) {
     const result = [];
     let current = '';
@@ -507,51 +487,26 @@
   }
 
   // ============================================
-  // FUNGSI SHOW NOTIFICATION
+  // FUNGSI UPDATE KONTEN (sama seperti sebelumnya)
   // ============================================
-  function showNotification(message) {
-    const notif = document.getElementById('updateNotif');
-    notif.querySelector('span').textContent = message;
-    notif.classList.add('show');
-    setTimeout(() => notif.classList.remove('show'), 5000);
-  }
-
-  // ============================================
-  // FUNGSI UPDATE KONTEN
-  // ============================================
-  function updateProfil(data) {
-    const profil = {};
-    data.forEach(item => { 
-      if (item.Key && item.Value) {
-        profil[item.Key.trim()] = item.Value.trim(); 
-      }
-    });
-    if (profil.visi) document.getElementById('visiText').innerHTML = `<strong>Visi:</strong> ${profil.visi}`;
-    if (profil.misi) document.getElementById('misiText').innerHTML = `<strong>Misi:</strong> ${profil.misi}`;
-    if (profil.struktur_ketua) document.getElementById('struktur_ketua').textContent = profil.struktur_ketua;
-    if (profil.struktur_sekretaris) document.getElementById('struktur_sekretaris').textContent = profil.struktur_sekretaris;
-    if (profil.struktur_bendahara) document.getElementById('struktur_bendahara').textContent = profil.struktur_bendahara;
-    if (profil.struktur_koordinator) document.getElementById('struktur_koordinator').textContent = profil.struktur_koordinator;
-    ['program_kerja_1','program_kerja_2','program_kerja_3','program_kerja_4'].forEach((key, i) => {
-      const el = document.getElementById(`program_${i+1}`);
-      if (el && profil[key]) el.textContent = profil[key];
-    });
-  }
 
   function updateBerita(data) {
     const container = document.getElementById('beritaContainer');
-    const aktif = data.filter(item => {
-      const status = (item.Status || '').toLowerCase();
-      return status === 'aktif' || !item.Status;
-    });
-    if (!aktif.length) { 
-      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada berita terbaru.</p>`; 
-      return; 
+    const aktifBerita = data.filter(item => 
+      (item.Status || '').toLowerCase() === 'aktif' || !item.Status
+    );
+    
+    if (aktifBerita.length === 0) {
+      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada berita terbaru.</p>`;
+      return;
     }
-    const icons = ['newspaper','stethoscope','hands-helping'];
-    container.innerHTML = aktif.slice(0,3).map((item,i) => `
+
+    const latest = aktifBerita.slice(0, 3);
+    const icons = ['newspaper', 'stethoscope', 'hands-helping'];
+    
+    container.innerHTML = latest.map((item, index) => `
       <article class="card">
-        <div class="media"><i class="fas fa-${icons[i%icons.length]}"></i></div>
+        <div class="media"><i class="fas fa-${icons[index % icons.length]}"></i></div>
         <div class="body">
           <h3>${item.Judul || 'Berita'}</h3>
           <p>${item.Deskripsi || ''}</p>
@@ -566,17 +521,21 @@
 
   function updateEvent(data) {
     const container = document.getElementById('eventContainer');
-    const aktif = data.filter(item => {
+    const aktifEvent = data.filter(item => {
       const status = (item.Status || '').toLowerCase();
       return status === 'akan datang' || status === 'berlangsung' || status === 'aktif' || !item.Status;
     });
-    if (!aktif.length) { 
-      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada event mendatang.</p>`; 
-      return; 
+    
+    if (aktifEvent.length === 0) {
+      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada event mendatang.</p>`;
+      return;
     }
-    container.innerHTML = aktif.slice(0,3).map(item => `
+
+    const latest = aktifEvent.slice(0, 3);
+    
+    container.innerHTML = latest.map(item => `
       <div class="event">
-        <div class="date"><i class="far fa-calendar"></i> ${item['Tanggal Mulai'] || ''}${item['Tanggal Selesai'] ? ' - ' + item['Tanggal Selesai'] : ''}</div>
+        <div class="date"><i class="far fa-calendar"></i> ${item['Tanggal Mulai'] || ''} ${item['Tanggal Selesai'] ? '- ' + item['Tanggal Selesai'] : ''}</div>
         <h3>${item['Nama Event'] || 'Event'}</h3>
         <p>${item.Deskripsi || ''}</p>
         ${item.Lokasi ? `<small style="display:block;margin-top:8px;color:var(--muted);"><i class="fas fa-map-marker-alt"></i> ${item.Lokasi}</small>` : ''}
@@ -584,59 +543,71 @@
     `).join('');
   }
 
+  function updatePengurus(data) {
+    const container = document.getElementById('strukturOrganisasi');
+    if (data.length === 0) return;
+    
+    container.innerHTML = data.map(item => `
+      <li><strong>${item.Jabatan}:</strong> ${item.Nama}${item.Bidang ? ` (${item.Bidang})` : ''}</li>
+    `).join('');
+  }
+
   function updatePrestasi(data) {
     const container = document.getElementById('prestasiContainer');
-    const aktif = data.filter(item => {
+    const aktifPrestasi = data.filter(item => {
       const status = (item.Status || '').toLowerCase();
       return status === 'aktif' || !item.Status;
     });
-    if (!aktif.length) { 
-      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada prestasi.</p>`; 
-      return; 
+    
+    if (aktifPrestasi.length === 0) {
+      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada prestasi.</p>`;
+      return;
     }
-    container.innerHTML = aktif.slice(0,3).map(item => `
+
+    container.innerHTML = aktifPrestasi.slice(0, 3).map(item => `
       <div class="prestasi">
         <div class="aw"><i class="fas fa-award"></i></div>
         <h4>${item['Nama Prestasi'] || 'Prestasi'}</h4>
         <p>${item.Pencapaian || ''}</p>
-        <small style="display:block;margin-top:8px;color:var(--accent-2);font-weight:600;">${item.Tahun || ''}${item.Tingkat ? ' • ' + item.Tingkat : ''}</small>
+        <small style="display:block;margin-top:8px;color:var(--accent-2);font-weight:600;">${item.Tahun || ''} ${item.Tingkat ? '• ' + item.Tingkat : ''}</small>
       </div>
     `).join('');
   }
 
   function updateKarya(data) {
     const container = document.getElementById('karyaContainer');
-    if (!data.length) { 
-      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada karya/inovasi.</p>`; 
-      return; 
+    if (data.length === 0) {
+      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada karya/inovasi.</p>`;
+      return;
     }
-    const icons = ['mobile-alt','book','stethoscope','heartbeat','microscope','flask'];
-    container.innerHTML = data.slice(0,3).map((item,i) => `
+
+    const icons = ['mobile-alt', 'book', 'stethoscope', 'heartbeat', 'microscope', 'flask'];
+    
+    container.innerHTML = data.slice(0, 3).map((item, index) => `
       <div class="karya">
-        <i class="fas fa-${icons[i%icons.length]}"></i>
+        <i class="fas fa-${icons[index % icons.length]}"></i>
         <h4>${item['Judul Karya'] || 'Karya'}</h4>
         <p>${item.Deskripsi || ''}</p>
-        <small style="display:block;margin-top:8px;color:var(--accent-2);">${item.Tahun || ''}${item.Jenis ? ' • ' + item.Jenis : ''}</small>
+        <small style="display:block;margin-top:8px;color:var(--accent-2);">${item.Tahun || ''} ${item.Jenis ? '• ' + item.Jenis : ''}</small>
       </div>
     `).join('');
   }
 
   function updateInfo(data) {
     const info = {};
-    data.forEach(item => { 
-      if (item.Key && item.Value) {
-        info[item.Key.trim()] = item.Value.trim(); 
-      }
+    data.forEach(item => {
+      info[item.Key] = item.Value;
     });
-    
+
+    // Update Hero
     if (info.hero_badge) document.getElementById('heroBadge').textContent = info.hero_badge;
     if (info.hero_title) document.getElementById('heroTitle').textContent = info.hero_title;
     if (info.hero_lead) document.getElementById('heroLead').textContent = info.hero_lead;
     if (info.hero_desc) document.getElementById('heroDesc').textContent = info.hero_desc;
+
+    // Update Section Titles
     if (info.berita_title) document.getElementById('beritaTitle').textContent = info.berita_title;
     if (info.berita_desc) document.getElementById('beritaDesc').textContent = info.berita_desc;
-    if (info.profil_title) document.getElementById('profilTitle').textContent = info.profil_title;
-    if (info.profil_desc) document.getElementById('profilDesc').textContent = info.profil_desc;
     if (info.event_title) document.getElementById('eventTitle').textContent = info.event_title;
     if (info.event_desc) document.getElementById('eventDesc').textContent = info.event_desc;
     if (info.karya_title) document.getElementById('karyaTitle').textContent = info.karya_title;
@@ -647,21 +618,27 @@
     if (info.keanggotaan_desc) document.getElementById('keanggotaanDesc').textContent = info.keanggotaan_desc;
     if (info.kontak_title) document.getElementById('kontakTitle').textContent = info.kontak_title;
     if (info.kontak_desc) document.getElementById('kontakDesc').textContent = info.kontak_desc;
+
+    // Update Visi Misi
+    if (info.visi) document.getElementById('visi').innerHTML = `<strong>Visi:</strong> ${info.visi}`;
+    if (info.misi) document.getElementById('misi').innerHTML = `<strong>Misi:</strong> ${info.misi}`;
+
+    // Update Kontak
     if (info.alamat) document.getElementById('alamat').innerHTML = info.alamat.replace(/\n/g, '<br>');
-    if (info.email) { 
-      document.getElementById('email').textContent = info.email; 
-      document.getElementById('email').href = `mailto:${info.email}`; 
+    if (info.email) {
+      document.getElementById('email').textContent = info.email;
+      document.getElementById('email').href = `mailto:${info.email}`;
     }
-    if (info.telepon) { 
-      document.getElementById('telepon').textContent = info.telepon; 
-      document.getElementById('telepon').href = `tel:${info.telepon}`; 
+    if (info.telepon) {
+      document.getElementById('telepon').textContent = info.telepon;
+      document.getElementById('telepon').href = `tel:${info.telepon}`;
     }
     if (info.instagram) document.getElementById('sosmedInstagram').href = info.instagram;
     if (info.facebook) document.getElementById('sosmedFacebook').href = info.facebook;
     if (info.youtube) document.getElementById('sosmedYoutube').href = info.youtube;
-    if (info.website_pusat) { 
-      document.getElementById('websitePusat').textContent = info.website_pusat.replace(/^https?:\/\//,''); 
-      document.getElementById('websitePusat').href = info.website_pusat; 
+    if (info.website_pusat) {
+      document.getElementById('websitePusat').textContent = info.website_pusat.replace(/^https?:\/\//, '');
+      document.getElementById('websitePusat').href = info.website_pusat;
     }
     if (info.footer_text) document.getElementById('footerText').textContent = info.footer_text;
   }
@@ -671,23 +648,32 @@
   // ============================================
   const header = document.getElementById('header');
   const topBtn = document.getElementById('topBtn');
+  
   window.addEventListener('scroll', () => {
     if (window.scrollY > 40) header.classList.add('scrolled');
     else header.classList.remove('scrolled');
+    
     if (window.scrollY > 400) topBtn.classList.add('show');
     else topBtn.classList.remove('show');
   });
 
-  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
-  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+  // ============================================
+  // MOBILE MENU
+  // ============================================
+  function openMenu() {
+    document.getElementById('mobileMenu').classList.add('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
 
   // ============================================
-  // JALANKAN
+  // JALANKAN LOAD DATA
   // ============================================
   document.addEventListener('DOMContentLoaded', loadData);
-  setInterval(loadData, 120000);
-  console.log('✅ IBI Ranting Raflesia website loaded!');
-  console.log('📊 Menggunakan Google Sheets via proxy corsproxy.io');
+  
+  // Auto refresh setiap 5 menit
+  setInterval(loadData, 300000);
 </script>
 
 </body>
