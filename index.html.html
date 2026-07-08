@@ -194,9 +194,9 @@
         <li><a href="#beranda">Beranda</a></li>
         <li><a href="#berita">Berita</a></li>
         <li><a href="#profil">Profil</a></li>
-        <li><a href="#keanggotaan">Keanggotaan</a></li>
+        <li><a href="#keanggotaan"> Keanggotaan</a></li>
         <li><a href="#event">Event</a></li>
-        <li><a href="#karya">Karya</a></li>
+        <li><a href="#karya">Karya dan Inovasi</a></li>
         <li><a href="#prestasi">Prestasi</a></li>
         <li><a href="#kontak">Kontak</a></li>
       </ul>
@@ -328,17 +328,12 @@
         <h3><i class="fas fa-building"></i> Sekretariat</h3>
         <div class="cline">
           <div class="ic"><i class="fas fa-map-marker-alt"></i></div>
-          <div><div class="lbl">Alamat</div><div class="val" id="alamat">Kampus 4 Universitas Bengkulu<br>Jl. Indragiri No. 4 Padang Harapan<br>Kota Bengkulu</div></div>
+          <div><div class="lbl">Alamat</div><div class="val" id="alamat">Kampus 4 Universitas Bengkulu, Jl. Indragiri No. 4 Padang Harapan Kota Bengkulu</div></div>
         </div>
         <div class="cline">
           <div class="ic"><i class="fas fa-envelope"></i></div>
           <div><div class="lbl">Email</div><div class="val"><a href="mailto:rantingraflesia@ibi.or.id" id="email">rantingraflesia@ibi.or.id</a></div></div>
         </div>
-        <div class="cline">
-          <div class="ic"><i class="fas fa-phone"></i></div>
-          <div><div class="lbl">Telepon</div><div class="val"><a href="tel:+6281234567890" id="telepon">0812-3456-789</a></div></div>
-        </div>
-      </div>
       <div class="contact-card">
         <h3><i class="fas fa-star"></i> Media Sosial</h3>
         <p style="font-size:14px;color:var(--muted);margin-bottom:16px">Ikuti kami di media sosial untuk update terbaru.</p>
@@ -625,7 +620,7 @@
     container.innerHTML = data.slice(0, 3).map((item, index) => `
       <div class="karya">
         <i class="fas fa-${icons[index % icons.length]}"></i>
-        <h4>${item['Judul Karya'] || 'Karya'}</h4>
+        <h4>${item['Judul Karya'] || 'Karya dan Inovasi'}</h4>
         <p>${item.Deskripsi || ''}</p>
         <small style="display:block;margin-top:8px;color:var(--accent-2);">${item.Tahun || ''} ${item.Jenis ? '• ' + item.Jenis : ''}</small>
       </div>
@@ -788,7 +783,7 @@
     container.innerHTML = data.slice(0, 3).map((item, index) => `
       <div class="kbox">
         <div class="ic"><i class="fas fa-${item.Ikon || icons[index % icons.length]}"></i></div>
-        <h3>${item.Judul || 'Keanggotaan'}</h3>
+        <h3>${item.Judul || 'Info Keanggotaan'}</h3>
         <p>${item.Deskripsi || ''}</p>
         <a href="${item.Link || '#kontak'}" class="btn-sm"><i class="fas fa-arrow-right"></i> ${item.Tombol || 'Selengkapnya'}</a>
       </div>
