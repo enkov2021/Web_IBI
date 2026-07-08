@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
-  /* ===== SEMUA CSS SAMA SEPERTI SEBELUMNYA ===== */
   :root{
     --primary:#5e1230;--primary-2:#8b1e3f;--accent:#d4a574;--accent-2:#b8935f;
     --bg:#fdfaf7;--card:#ffffff;--muted:#6b5d54;--border:#eadfd6;--light:#f8f0ea;
@@ -21,11 +20,13 @@
   img{max-width:100%;display:block}
   .container{width:92%;max-width:1200px;margin:0 auto}
 
+  /* LOADING */
   .loading{position:fixed;inset:0;background:#fff;z-index:9999;display:grid;place-items:center;transition:opacity .5s}
   .loading.hide{opacity:0;pointer-events:none}
   .loading .spinner{width:50px;height:50px;border:4px solid var(--light);border-top:4px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
+  /* HEADER */
   header{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.05);transition:.3s}
   header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.1);padding:2px 0}
   nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
@@ -40,6 +41,7 @@
   .nav-links a:hover::after{width:100%}
   .menu-btn{display:none;background:none;border:none;color:var(--primary);font-size:26px;cursor:pointer}
 
+  /* MOBILE MENU */
   .mobile-menu{position:fixed;inset:0;z-index:1100;visibility:hidden;opacity:0;transition:.3s}
   .mobile-menu.open{visibility:visible;opacity:1}
   .mobile-menu .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.4)}
@@ -53,6 +55,7 @@
   .mobile-menu a{display:block;padding:14px 0;font-weight:600;color:#3a2a30}
   .mobile-menu a:hover{color:var(--primary)}
 
+  /* HERO */
   .hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:120px 0 80px;position:relative;
     background:linear-gradient(135deg,rgba(94,18,48,.92),rgba(139,30,63,.88)),url('https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1600&q=80') center/cover}
   .hero .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 18px;border-radius:999px;font-size:13px;font-weight:500;margin-bottom:22px}
@@ -70,6 +73,7 @@
   .scroll-down{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#fff;font-size:28px;animation:bd 2s infinite}
   @keyframes bd{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
 
+  /* SECTIONS */
   section.sec{padding:80px 0}
   section.alt{background:var(--light)}
   .sec-head{text-align:center;max-width:720px;margin:0 auto 50px}
@@ -140,9 +144,11 @@
   .weblink{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)}
   .weblink a{color:var(--primary);font-weight:500}
 
+  /* FOOTER */
   footer{background:linear-gradient(135deg,#3d0c20,var(--primary));color:#fff;padding:26px 0;text-align:center;font-size:14px}
   footer .container{opacity:.9}
 
+  /* BACK TO TOP */
   .top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 8px 20px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:.3s;z-index:900}
   .top.show{opacity:1;visibility:visible}
   .top:hover{background:var(--accent);color:var(--primary);transform:translateY(-4px)}
@@ -153,6 +159,7 @@
   .update-notif i{color:var(--accent)}
   .update-notif .close{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;margin-left:5px}
 
+  /* RESPONSIVE */
   @media (max-width:960px){
     .g-3{grid-template-columns:repeat(2,1fr)}
   }
@@ -402,7 +409,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   // ============================================
-  // KONFIGURASI GOOGLE SHEETS
+  // KONFIGURASI GOOGLE SHEETS - URL CSV SUDAH BENAR
   // ============================================
   const CONFIG = {
     SHEET_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTnlE-MJr5ZBPemfSgAissme5faWDTCr_JwbEpOVIRLjN_Hmqh6ZjIlgI4Go8wMUUdCUEJORlWkAge/pub?output=csv'
@@ -417,6 +424,8 @@
       const timestamp = new Date().getTime();
       const url = `${CONFIG.SHEET_URL}&_=${timestamp}`;
       
+      console.log('🔄 Mengambil data dari:', url);
+      
       const response = await axios.get(url, {
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -426,7 +435,10 @@
       });
       
       const csv = response.data;
+      console.log('📊 Data CSV diterima, panjang:', csv.length);
+      
       const allData = parseCSV(csv);
+      console.log('📋 Total data terparse:', allData.length);
       
       // Pisahkan data berdasarkan sheet
       const beritaData = allData.filter(row => row.Judul && row.Deskripsi && row.Tanggal);
@@ -443,6 +455,13 @@
         )
       );
 
+      console.log('📰 Berita:', beritaData.length, 'item');
+      console.log('📅 Event:', eventData.length, 'item');
+      console.log('🏆 Prestasi:', prestasiData.length, 'item');
+      console.log('💡 Karya:', karyaData.length, 'item');
+      console.log('ℹ️ Info:', infoData.length, 'item');
+      console.log('📋 Profil:', profilData.length, 'item');
+
       // Update semua konten
       updateBerita(beritaData);
       updateEvent(eventData);
@@ -453,10 +472,10 @@
 
       // Sembunyikan loading & tampilkan notifikasi
       document.getElementById('loading').classList.add('hide');
-      showNotification('Data berhasil diperbarui!');
+      showNotification('✅ Data berhasil diperbarui!');
 
     } catch (error) {
-      console.error('Gagal memuat data:', error);
+      console.error('❌ Gagal memuat data:', error);
       document.getElementById('loading').innerHTML = `
         <div style="text-align:center;color:red;max-width:500px;">
           <i class="fas fa-exclamation-circle" style="font-size:40px;margin-bottom:10px;"></i>
@@ -486,7 +505,6 @@
       const values = parseCSVLine(lines[i]);
       const obj = {};
       headers.forEach((header, index) => {
-        // Hapus karakter aneh seperti \r
         const cleanHeader = header.replace(/\r/g, '').trim();
         const cleanValue = (values[index] || '').replace(/\r/g, '').trim();
         obj[cleanHeader] = cleanValue;
@@ -524,7 +542,6 @@
     notif.querySelector('span').textContent = message;
     notif.classList.add('show');
     
-    // Auto hide after 5 seconds
     setTimeout(() => {
       notif.classList.remove('show');
     }, 5000);
@@ -540,17 +557,12 @@
       profil[item.Key.trim()] = item.Value.trim();
     });
 
-    // Update Visi
     if (profil.visi) {
       document.getElementById('visiText').innerHTML = `<strong>Visi:</strong> ${profil.visi}`;
     }
-
-    // Update Misi
     if (profil.misi) {
       document.getElementById('misiText').innerHTML = `<strong>Misi:</strong> ${profil.misi}`;
     }
-
-    // Update Struktur Organisasi
     if (profil.struktur_ketua) {
       document.getElementById('struktur_ketua').textContent = profil.struktur_ketua;
     }
@@ -564,7 +576,6 @@
       document.getElementById('struktur_koordinator').textContent = profil.struktur_koordinator;
     }
 
-    // Update Program Kerja
     const programKeys = ['program_kerja_1', 'program_kerja_2', 'program_kerja_3', 'program_kerja_4'];
     programKeys.forEach((key, index) => {
       const element = document.getElementById(`program_${index + 1}`);
@@ -674,13 +685,13 @@
       info[item.Key.trim()] = item.Value.trim();
     });
 
-    // Update Hero
+    // Hero
     if (info.hero_badge) document.getElementById('heroBadge').textContent = info.hero_badge;
     if (info.hero_title) document.getElementById('heroTitle').textContent = info.hero_title;
     if (info.hero_lead) document.getElementById('heroLead').textContent = info.hero_lead;
     if (info.hero_desc) document.getElementById('heroDesc').textContent = info.hero_desc;
 
-    // Update Section Titles
+    // Section Titles
     if (info.berita_title) document.getElementById('beritaTitle').textContent = info.berita_title;
     if (info.berita_desc) document.getElementById('beritaDesc').textContent = info.berita_desc;
     if (info.profil_title) document.getElementById('profilTitle').textContent = info.profil_title;
@@ -696,7 +707,7 @@
     if (info.kontak_title) document.getElementById('kontakTitle').textContent = info.kontak_title;
     if (info.kontak_desc) document.getElementById('kontakDesc').textContent = info.kontak_desc;
 
-    // Update Kontak
+    // Kontak
     if (info.alamat) document.getElementById('alamat').innerHTML = info.alamat.replace(/\n/g, '<br>');
     if (info.email) {
       document.getElementById('email').textContent = info.email;
@@ -745,11 +756,12 @@
   // ============================================
   document.addEventListener('DOMContentLoaded', loadData);
   
-  // Refresh setiap 2 menit (lebih cepat untuk testing)
+  // Refresh setiap 2 menit
   setInterval(loadData, 120000);
   
-  // Refresh manual dengan tombol (bisa ditambahkan)
-  console.log('💡 Tips: Untuk refresh data, tekan Ctrl+Shift+R (hard refresh)');
+  console.log('✅ IBI Ranting Raflesia website loaded!');
+  console.log('📊 Menggunakan data dari:', CONFIG.SHEET_URL);
+  console.log('💡 Tips: Tekan Ctrl+Shift+R untuk hard refresh');
 </script>
 
 </body>
