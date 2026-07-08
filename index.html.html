@@ -370,10 +370,13 @@
 
 <script>
   // ============================================
-  // KONFIGURASI - MENGGUNAKAN API SHEET.BEST
+  // KONFIGURASI - PAKAI PROXY CORS UNTUK SHEET.BEST
   // ============================================
   const CONFIG = {
-    SHEET_URL: 'https://api.sheetbest.com/sheets/a76dac6c-b6e7-43bf-8d1a-8da6c46f44a7'
+    // Gunakan proxy allorigins untuk bypass CORS
+    SHEET_URL: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(
+      'https://api.sheetbest.com/sheets/a76dac6c-b6e7-43bf-8d1a-8da6c46f44a7'
+    )
   };
 
   // ============================================
@@ -382,9 +385,9 @@
   async function loadData() {
     try {
       const timestamp = new Date().getTime();
-      const url = `${CONFIG.SHEET_URL}?_=${timestamp}`;
+      const url = `${CONFIG.SHEET_URL}&_=${timestamp}`;
       
-      console.log('🔄 Mengambil data dari Sheet.best API...');
+      console.log('🔄 Mengambil data dari Sheet.best via proxy...');
       
       const response = await fetch(url, {
         headers: {
@@ -408,6 +411,7 @@
       // Pisahkan data berdasarkan kolom yang ada
       const firstItem = allData[0];
       const keys = Object.keys(firstItem);
+      console.log('📋 Kolom yang tersedia:', keys.join(', '));
       
       // Deteksi jenis data dari kolom yang ada
       const beritaData = allData.filter(row => row.Judul && row.Deskripsi && row.Tanggal);
@@ -451,6 +455,8 @@
         errorMessage = `Server merespon: ${error.message}`;
       } else if (error.message === 'Data kosong') {
         errorMessage = 'Data kosong. Silakan isi data di Google Sheets terlebih dahulu.';
+      } else if (error.message === 'Failed to fetch') {
+        errorMessage = 'Tidak bisa terhubung ke server. Cek koneksi internet Anda.';
       }
       
       document.getElementById('loading').innerHTML = `
@@ -590,13 +596,10 @@
       }
     });
     
-    // Hero
     if (info.hero_badge) document.getElementById('heroBadge').textContent = info.hero_badge;
     if (info.hero_title) document.getElementById('heroTitle').textContent = info.hero_title;
     if (info.hero_lead) document.getElementById('heroLead').textContent = info.hero_lead;
     if (info.hero_desc) document.getElementById('heroDesc').textContent = info.hero_desc;
-
-    // Section Titles
     if (info.berita_title) document.getElementById('beritaTitle').textContent = info.berita_title;
     if (info.berita_desc) document.getElementById('beritaDesc').textContent = info.berita_desc;
     if (info.profil_title) document.getElementById('profilTitle').textContent = info.profil_title;
@@ -611,8 +614,6 @@
     if (info.keanggotaan_desc) document.getElementById('keanggotaanDesc').textContent = info.keanggotaan_desc;
     if (info.kontak_title) document.getElementById('kontakTitle').textContent = info.kontak_title;
     if (info.kontak_desc) document.getElementById('kontakDesc').textContent = info.kontak_desc;
-
-    // Kontak
     if (info.alamat) document.getElementById('alamat').innerHTML = info.alamat.replace(/\n/g, '<br>');
     if (info.email) { 
       document.getElementById('email').textContent = info.email; 
@@ -653,7 +654,7 @@
   document.addEventListener('DOMContentLoaded', loadData);
   setInterval(loadData, 120000);
   console.log('✅ IBI Ranting Raflesia website loaded!');
-  console.log('📊 Menggunakan API Sheet.best:', CONFIG.SHEET_URL);
+  console.log('📊 Menggunakan Sheet.best via proxy CORS');
 </script>
 
 </body>
