@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
+  /* ===== SEMUA CSS SAMA SEPERTI SEBELUMNYA ===== */
   :root{
     --primary:#5e1230;--primary-2:#8b1e3f;--accent:#d4a574;--accent-2:#b8935f;
     --bg:#fdfaf7;--card:#ffffff;--muted:#6b5d54;--border:#eadfd6;--light:#f8f0ea;
@@ -20,13 +21,11 @@
   img{max-width:100%;display:block}
   .container{width:92%;max-width:1200px;margin:0 auto}
 
-  /* LOADING */
   .loading{position:fixed;inset:0;background:#fff;z-index:9999;display:grid;place-items:center;transition:opacity .5s}
   .loading.hide{opacity:0;pointer-events:none}
   .loading .spinner{width:50px;height:50px;border:4px solid var(--light);border-top:4px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* HEADER */
   header{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.05);transition:.3s}
   header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.1);padding:2px 0}
   nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
@@ -41,7 +40,6 @@
   .nav-links a:hover::after{width:100%}
   .menu-btn{display:none;background:none;border:none;color:var(--primary);font-size:26px;cursor:pointer}
 
-  /* MOBILE MENU */
   .mobile-menu{position:fixed;inset:0;z-index:1100;visibility:hidden;opacity:0;transition:.3s}
   .mobile-menu.open{visibility:visible;opacity:1}
   .mobile-menu .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.4)}
@@ -55,7 +53,6 @@
   .mobile-menu a{display:block;padding:14px 0;font-weight:600;color:#3a2a30}
   .mobile-menu a:hover{color:var(--primary)}
 
-  /* HERO */
   .hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:120px 0 80px;position:relative;
     background:linear-gradient(135deg,rgba(94,18,48,.92),rgba(139,30,63,.88)),url('https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1600&q=80') center/cover}
   .hero .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 18px;border-radius:999px;font-size:13px;font-weight:500;margin-bottom:22px}
@@ -73,7 +70,6 @@
   .scroll-down{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#fff;font-size:28px;animation:bd 2s infinite}
   @keyframes bd{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
 
-  /* SECTIONS */
   section.sec{padding:80px 0}
   section.alt{background:var(--light)}
   .sec-head{text-align:center;max-width:720px;margin:0 auto 50px}
@@ -144,16 +140,19 @@
   .weblink{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)}
   .weblink a{color:var(--primary);font-weight:500}
 
-  /* FOOTER */
   footer{background:linear-gradient(135deg,#3d0c20,var(--primary));color:#fff;padding:26px 0;text-align:center;font-size:14px}
   footer .container{opacity:.9}
 
-  /* BACK TO TOP */
   .top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;font-size:18px;box-shadow:0 8px 20px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:.3s;z-index:900}
   .top.show{opacity:1;visibility:visible}
   .top:hover{background:var(--accent);color:var(--primary);transform:translateY(-4px)}
 
-  /* RESPONSIVE */
+  /* NOTIFICATION */
+  .update-notif{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#5e1230;color:#fff;padding:12px 24px;border-radius:50px;box-shadow:0 4px 20px rgba(0,0,0,.2);z-index:1000;display:none;align-items:center;gap:10px;font-size:14px}
+  .update-notif.show{display:flex}
+  .update-notif i{color:var(--accent)}
+  .update-notif .close{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;margin-left:5px}
+
   @media (max-width:960px){
     .g-3{grid-template-columns:repeat(2,1fr)}
   }
@@ -172,6 +171,13 @@
 <!-- LOADING -->
 <div class="loading" id="loading">
   <div class="spinner"></div>
+</div>
+
+<!-- UPDATE NOTIFICATION -->
+<div class="update-notif" id="updateNotif">
+  <i class="fas fa-sync-alt fa-spin"></i>
+  <span>Data berhasil diperbarui!</span>
+  <button class="close" onclick="this.parentElement.classList.remove('show')">&times;</button>
 </div>
 
 <!-- HEADER -->
@@ -403,18 +409,28 @@
   };
 
   // ============================================
-  // FUNGSI LOAD DATA
+  // FUNGSI LOAD DATA DENGAN CACHE BUSTER
   // ============================================
   async function loadData() {
     try {
-      const response = await axios.get(CONFIG.SHEET_URL);
+      // Tambahkan timestamp untuk menghindari cache
+      const timestamp = new Date().getTime();
+      const url = `${CONFIG.SHEET_URL}&_=${timestamp}`;
+      
+      const response = await axios.get(url, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
+      
       const csv = response.data;
       const allData = parseCSV(csv);
       
       // Pisahkan data berdasarkan sheet
       const beritaData = allData.filter(row => row.Judul && row.Deskripsi && row.Tanggal);
       const eventData = allData.filter(row => row['Nama Event'] && row['Tanggal Mulai']);
-      const pengurusData = allData.filter(row => row.Nama && row.Jabatan);
       const prestasiData = allData.filter(row => row['Nama Prestasi'] && row.Pencapaian);
       const karyaData = allData.filter(row => row['Judul Karya'] && row.Deskripsi);
       const infoData = allData.filter(row => row.Key && row.Value);
@@ -430,13 +446,14 @@
       // Update semua konten
       updateBerita(beritaData);
       updateEvent(eventData);
-      updatePengurus(pengurusData);
       updatePrestasi(prestasiData);
       updateKarya(karyaData);
       updateInfo(infoData);
       updateProfil(profilData);
 
+      // Sembunyikan loading & tampilkan notifikasi
       document.getElementById('loading').classList.add('hide');
+      showNotification('Data berhasil diperbarui!');
 
     } catch (error) {
       console.error('Gagal memuat data:', error);
@@ -455,19 +472,24 @@
   }
 
   // ============================================
-  // FUNGSI PARSE CSV
+  // FUNGSI PARSE CSV (lebih robust)
   // ============================================
   function parseCSV(csv) {
     const lines = csv.split('\n').filter(line => line.trim() !== '');
     if (lines.length < 2) return [];
     
+    // Parse header dengan handle quotes
     const headers = parseCSVLine(lines[0]);
     const result = [];
+    
     for (let i = 1; i < lines.length; i++) {
       const values = parseCSVLine(lines[i]);
       const obj = {};
       headers.forEach((header, index) => {
-        obj[header] = values[index] || '';
+        // Hapus karakter aneh seperti \r
+        const cleanHeader = header.replace(/\r/g, '').trim();
+        const cleanValue = (values[index] || '').replace(/\r/g, '').trim();
+        obj[cleanHeader] = cleanValue;
       });
       result.push(obj);
     }
@@ -495,14 +517,27 @@
   }
 
   // ============================================
+  // FUNGSI SHOW NOTIFICATION
+  // ============================================
+  function showNotification(message) {
+    const notif = document.getElementById('updateNotif');
+    notif.querySelector('span').textContent = message;
+    notif.classList.add('show');
+    
+    // Auto hide after 5 seconds
+    setTimeout(() => {
+      notif.classList.remove('show');
+    }, 5000);
+  }
+
+  // ============================================
   // FUNGSI UPDATE KONTEN
   // ============================================
 
-  // UPDATE PROFIL (Visi Misi, Struktur, Program Kerja)
   function updateProfil(data) {
     const profil = {};
     data.forEach(item => {
-      profil[item.Key] = item.Value;
+      profil[item.Key.trim()] = item.Value.trim();
     });
 
     // Update Visi
@@ -529,7 +564,7 @@
       document.getElementById('struktur_koordinator').textContent = profil.struktur_koordinator;
     }
 
-    // Update Program Kerja (maksimal 4 program)
+    // Update Program Kerja
     const programKeys = ['program_kerja_1', 'program_kerja_2', 'program_kerja_3', 'program_kerja_4'];
     programKeys.forEach((key, index) => {
       const element = document.getElementById(`program_${index + 1}`);
@@ -539,7 +574,6 @@
     });
   }
 
-  // UPDATE BERITA
   function updateBerita(data) {
     const container = document.getElementById('beritaContainer');
     const aktifBerita = data.filter(item => 
@@ -569,7 +603,6 @@
     `).join('');
   }
 
-  // UPDATE EVENT
   function updateEvent(data) {
     const container = document.getElementById('eventContainer');
     const aktifEvent = data.filter(item => {
@@ -594,14 +627,6 @@
     `).join('');
   }
 
-  // UPDATE PENGURUS (jika ada data tambahan dari sheet Pengurus)
-  function updatePengurus(data) {
-    // Jika ada data pengurus dari sheet terpisah, update di sini
-    // Saat ini struktur organisasi diambil dari sheet Profil
-    // Fungsi ini bisa digunakan untuk data tambahan jika diperlukan
-  }
-
-  // UPDATE PRESTASI
   function updatePrestasi(data) {
     const container = document.getElementById('prestasiContainer');
     const aktifPrestasi = data.filter(item => {
@@ -624,7 +649,6 @@
     `).join('');
   }
 
-  // UPDATE KARYA
   function updateKarya(data) {
     const container = document.getElementById('karyaContainer');
     if (data.length === 0) {
@@ -644,11 +668,10 @@
     `).join('');
   }
 
-  // UPDATE INFO UMUM
   function updateInfo(data) {
     const info = {};
     data.forEach(item => {
-      info[item.Key] = item.Value;
+      info[item.Key.trim()] = item.Value.trim();
     });
 
     // Update Hero
@@ -721,7 +744,12 @@
   // JALANKAN LOAD DATA
   // ============================================
   document.addEventListener('DOMContentLoaded', loadData);
-  setInterval(loadData, 300000);
+  
+  // Refresh setiap 2 menit (lebih cepat untuk testing)
+  setInterval(loadData, 120000);
+  
+  // Refresh manual dengan tombol (bisa ditambahkan)
+  console.log('💡 Tips: Untuk refresh data, tekan Ctrl+Shift+R (hard refresh)');
 </script>
 
 </body>
