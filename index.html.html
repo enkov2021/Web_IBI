@@ -625,7 +625,7 @@
     container.innerHTML = data.slice(0, 3).map((item, index) => `
       <div class="karya">
         <i class="fas fa-${icons[index % icons.length]}"></i>
-        <h4>${item['Judul Karya'] || 'Karya'}</h4>
+        <h4>${item['Judul Karya'] || 'Karya dan Inovasi'}</h4>
         <p>${item.Deskripsi || ''}</p>
         <small style="display:block;margin-top:8px;color:var(--accent-2);">${item.Tahun || ''} ${item.Jenis ? '• ' + item.Jenis : ''}</small>
       </div>
