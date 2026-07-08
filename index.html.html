@@ -370,12 +370,13 @@
 
 <script>
   // ============================================
-  // KONFIGURASI - PAKAI PROXY CORS UNTUK SHEET.BEST
+  // KONFIGURASI - KEMBALI KE GOOGLE SHEETS CSV
+  // MENGGUNAKAN PROXY CORS YANG PALING STABIL
   // ============================================
   const CONFIG = {
-    // Gunakan proxy allorigins untuk bypass CORS
-    SHEET_URL: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(
-      'https://api.sheetbest.com/sheets/a76dac6c-b6e7-43bf-8d1a-8da6c46f44a7'
+    // Gunakan proxy corsproxy.io (lebih stabil)
+    SHEET_URL: 'https://corsproxy.io/?' + encodeURIComponent(
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTnlE-MJr5ZBPemfSgAissme5faWDTCr_JwbEpOVIRLjN_Hmqh6ZjIlgI4Go8wMUUdCUEJORlWkAge/pub?output=csv'
     )
   };
 
@@ -387,7 +388,7 @@
       const timestamp = new Date().getTime();
       const url = `${CONFIG.SHEET_URL}&_=${timestamp}`;
       
-      console.log('🔄 Mengambil data dari Sheet.best via proxy...');
+      console.log('🔄 Mengambil data dari Google Sheets via proxy...');
       
       const response = await fetch(url, {
         headers: {
@@ -401,19 +402,13 @@
         throw new Error(`HTTP Error: ${response.status}`);
       }
       
-      const allData = await response.json();
-      console.log('📊 Data diterima:', allData.length, 'item');
+      const csv = await response.text();
+      console.log('📊 Data CSV diterima, panjang:', csv.length);
       
-      if (allData.length === 0) {
-        throw new Error('Data kosong. Pastikan sheet.best sudah terisi data.');
-      }
+      const allData = parseCSV(csv);
+      console.log('📋 Total data terparse:', allData.length);
       
-      // Pisahkan data berdasarkan kolom yang ada
-      const firstItem = allData[0];
-      const keys = Object.keys(firstItem);
-      console.log('📋 Kolom yang tersedia:', keys.join(', '));
-      
-      // Deteksi jenis data dari kolom yang ada
+      // Pisahkan data berdasarkan sheet
       const beritaData = allData.filter(row => row.Judul && row.Deskripsi && row.Tanggal);
       const eventData = allData.filter(row => row['Nama Event'] && row['Tanggal Mulai']);
       const prestasiData = allData.filter(row => row['Nama Prestasi'] && row.Pencapaian);
@@ -427,15 +422,6 @@
           row.Key.includes('struktur_')
         )
       );
-      
-      // Jika data tidak terdeteksi, coba gunakan semua data sebagai info
-      if (beritaData.length === 0 && eventData.length === 0 && infoData.length === 0) {
-        console.log('⚠️ Data tidak terdeteksi, mencoba menggunakan semua data sebagai info...');
-        updateInfo(allData);
-        document.getElementById('loading').classList.add('hide');
-        showNotification('✅ Data berhasil dimuat!');
-        return;
-      }
 
       updateBerita(beritaData);
       updateEvent(eventData);
@@ -450,13 +436,11 @@
     } catch (error) {
       console.error('❌ Error detail:', error);
       
-      let errorMessage = 'Pastikan data di sheet.best sudah terisi dengan benar.';
+      let errorMessage = 'Pastikan Google Sheets sudah dipublikasikan dengan benar.';
       if (error.message.includes('HTTP')) {
         errorMessage = `Server merespon: ${error.message}`;
-      } else if (error.message === 'Data kosong') {
-        errorMessage = 'Data kosong. Silakan isi data di Google Sheets terlebih dahulu.';
       } else if (error.message === 'Failed to fetch') {
-        errorMessage = 'Tidak bisa terhubung ke server. Cek koneksi internet Anda.';
+        errorMessage = 'Tidak bisa terhubung ke server. Coba gunakan proxy lain atau periksa koneksi internet.';
       }
       
       document.getElementById('loading').innerHTML = `
@@ -465,12 +449,61 @@
           <h3 style="color:#5e1230;">Gagal memuat data</h3>
           <p style="font-size:14px;margin:10px 0;">${errorMessage}</p>
           <p style="font-size:12px;color:#999;">Error: ${error.message}</p>
-          <button onclick="location.reload()" style="margin-top:15px;padding:10px 30px;background:#5e1230;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:600;">
-            <i class="fas fa-sync"></i> Muat Ulang
-          </button>
+          <div style="margin-top:15px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <button onclick="location.reload()" style="padding:10px 30px;background:#5e1230;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:600;">
+              <i class="fas fa-sync"></i> Muat Ulang
+            </button>
+            <button onclick="window.location.href=window.location.href+'?force=1'" style="padding:10px 30px;background:#d4a574;color:#3a2410;border:none;border-radius:5px;cursor:pointer;font-weight:600;">
+              <i class="fas fa-bolt"></i> Force Load
+            </button>
+          </div>
+          <p style="font-size:11px;color:#999;margin-top:10px;">Jika gagal, coba buka di browser lain atau gunakan VPN</p>
         </div>
       `;
     }
+  }
+
+  // ============================================
+  // FUNGSI PARSE CSV
+  // ============================================
+  function parseCSV(csv) {
+    const lines = csv.split('\n').filter(line => line.trim() !== '');
+    if (lines.length < 2) return [];
+    
+    const headers = parseCSVLine(lines[0]);
+    const result = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+      const values = parseCSVLine(lines[i]);
+      const obj = {};
+      headers.forEach((header, index) => {
+        const cleanHeader = header.replace(/\r/g, '').trim();
+        const cleanValue = (values[index] || '').replace(/\r/g, '').trim();
+        obj[cleanHeader] = cleanValue;
+      });
+      result.push(obj);
+    }
+    return result;
+  }
+
+  function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+    
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === ',' && !inQuotes) {
+        result.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    result.push(current.trim());
+    return result;
   }
 
   // ============================================
@@ -654,7 +687,7 @@
   document.addEventListener('DOMContentLoaded', loadData);
   setInterval(loadData, 120000);
   console.log('✅ IBI Ranting Raflesia website loaded!');
-  console.log('📊 Menggunakan Sheet.best via proxy CORS');
+  console.log('📊 Menggunakan Google Sheets via proxy corsproxy.io');
 </script>
 
 </body>
