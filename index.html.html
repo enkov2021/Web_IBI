@@ -362,50 +362,49 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   // ============================================
-  // KONFIGURASI GOOGLE SHEETS
+  // KONFIGURASI GOOGLE SHEETS - MASING-MASING SHEET
   // ============================================
- const CONFIG = {
-  INFO: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=296493223&single=true&output=csv",
-  BERITA: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1303563060&single=true&output=csv",
-  EVENT: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1756905762&single=true&output=csv",
-  PRESTASI: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1709962990&single=true&output=csv",
-  KARYA: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1840968040&single=true&output=csv",
-  PROFIL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=2095719796&single=true&output=csv",
-  KEANGGOTAAN: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1680349672&single=true&output=csv"
-};
+  const CONFIG = {
+    INFO: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=296493223&single=true&output=csv",
+    BERITA: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1303563060&single=true&output=csv",
+    EVENT: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1756905762&single=true&output=csv",
+    PRESTASI: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1709962990&single=true&output=csv",
+    KARYA: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1840968040&single=true&output=csv",
+    PROFIL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=2095719796&single=true&output=csv",
+    KEANGGOTAAN: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1680349672&single=true&output=csv"
+  };
 
   // ============================================
-  // FUNGSI LOAD DATA DARI GOOGLE SHEETS
+  // FUNGSI LOAD DATA DARI MASING-MASING SHEET
   // ============================================
   async function loadData() {
     try {
-      const response = await axios.get(CONFIG.SHEET_URL);
-      const csv = response.data;
-      const allData = parseCSV(csv);
-      
-      // Pisahkan data berdasarkan kategori
-      const beritaData = allData.filter(row => row.Judul && row.Deskripsi && row.Tanggal);
-      const eventData = allData.filter(row => row['Nama Event'] && row['Tanggal Mulai']);
-      const prestasiData = allData.filter(row => row['Nama Prestasi'] && row.Pencapaian);
-      const karyaData = allData.filter(row => row['Judul Karya'] && row.Deskripsi);
-      const infoData = allData.filter(row => row.Key && row.Value);
-      
-      // DATA PROFIL - menggunakan sheet terpisah atau filter berdasarkan kolom khusus
-      // Profil: Visi, Misi, Struktur Organisasi, Program Kerja
-      const profilData = allData.filter(row => row.Kategori === 'Profil' || row.Tipe === 'Profil');
-      
-      // Keanggotaan
-      const keanggotaanData = allData.filter(row => 
-        row.Kategori === 'Keanggotaan' || 
-        (row.Judul && row.Deskripsi && row.Ikon && !row.Tanggal)
-      );
+      // Load semua data secara paralel
+      const [infoRes, beritaRes, eventRes, prestasiRes, karyaRes, profilRes, keanggotaanRes] = await Promise.all([
+        axios.get(CONFIG.INFO),
+        axios.get(CONFIG.BERITA),
+        axios.get(CONFIG.EVENT),
+        axios.get(CONFIG.PRESTASI),
+        axios.get(CONFIG.KARYA),
+        axios.get(CONFIG.PROFIL),
+        axios.get(CONFIG.KEANGGOTAAN)
+      ]);
+
+      // Parse CSV masing-masing
+      const infoData = parseCSV(infoRes.data);
+      const beritaData = parseCSV(beritaRes.data);
+      const eventData = parseCSV(eventRes.data);
+      const prestasiData = parseCSV(prestasiRes.data);
+      const karyaData = parseCSV(karyaRes.data);
+      const profilData = parseCSV(profilRes.data);
+      const keanggotaanData = parseCSV(keanggotaanRes.data);
 
       // Update konten
+      updateInfo(infoData);
       updateBerita(beritaData);
       updateEvent(eventData);
       updatePrestasi(prestasiData);
       updateKarya(karyaData);
-      updateInfo(infoData);
       updateProfil(profilData);
       updateKeanggotaan(keanggotaanData);
 
@@ -428,6 +427,9 @@
     }
   }
 
+  // ============================================
+  // FUNGSI PARSE CSV
+  // ============================================
   function parseCSV(csv) {
     const lines = csv.split('\n').filter(line => line.trim() !== '');
     if (lines.length < 2) return [];
@@ -466,274 +468,8 @@
   }
 
   // ============================================
-  // FUNGSI UPDATE PROFIL DARI GOOGLE SHEETS
+  // FUNGSI UPDATE INFO (HERO, TITLE, KONTAK, DLL)
   // ============================================
-  function updateProfil(data) {
-    const container = document.getElementById('profilContainer');
-    
-    // Jika tidak ada data profil, gunakan data default
-    if (data.length === 0) {
-      container.innerHTML = `
-        <div class="profil">
-          <i class="fas fa-eye big"></i>
-          <h3>Visi &amp; Misi</h3>
-          <p><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
-          <br>
-          <p><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
-        </div>
-        <div class="profil">
-          <i class="fas fa-users big"></i>
-          <h3>Struktur Organisasi</h3>
-          <ul>
-            <li><strong>Ketua:</strong> Nurhayati, S.ST., M.Kes</li>
-            <li><strong>Sekretaris:</strong> Dewi Sartika, S.ST.</li>
-            <li><strong>Bendahara:</strong> Rina Marlina, S.ST.</li>
-            <li><strong>Koord. Bidang:</strong> Yuni Astuti, S.ST., M.Kes</li>
-          </ul>
-        </div>
-        <div class="profil">
-          <i class="fas fa-bullseye big"></i>
-          <h3>Program Kerja</h3>
-          <ul>
-            <li>Pendidikan &amp; Pelatihan Berkelanjutan</li>
-            <li>Advokasi Kebijakan Kesehatan</li>
-            <li>Pengabdian Masyarakat</li>
-            <li>Peningkatan Kesejahteraan Anggota</li>
-          </ul>
-        </div>
-      `;
-      return;
-    }
-
-    // Kelompokkan data berdasarkan tipe
-    const visiData = data.find(item => item.Tipe === 'Visi');
-    const misiData = data.find(item => item.Tipe === 'Misi');
-    const strukturData = data.filter(item => item.Tipe === 'Struktur');
-    const programData = data.filter(item => item.Tipe === 'Program');
-
-    // Build HTML
-    let html = '';
-
-    // Visi
-    if (visiData || misiData) {
-      html += `
-        <div class="profil">
-          <i class="fas fa-eye big"></i>
-          <h3>Visi &amp; Misi</h3>
-          ${visiData ? `<p><strong>Visi:</strong> ${visiData.Deskripsi || visiData.Value || ''}</p>` : ''}
-          ${visiData && misiData ? '<br>' : ''}
-          ${misiData ? `<p><strong>Misi:</strong> ${misiData.Deskripsi || misiData.Value || ''}</p>` : ''}
-        </div>
-      `;
-    }
-
-    // Struktur Organisasi
-    if (strukturData.length > 0) {
-      html += `
-        <div class="profil">
-          <i class="fas fa-users big"></i>
-          <h3>Struktur Organisasi</h3>
-          <ul>
-            ${strukturData.map(item => `
-              <li><strong>${item.Jabatan || 'Anggota'}:</strong> ${item.Nama || item.Deskripsi || ''}</li>
-            `).join('')}
-          </ul>
-        </div>
-      `;
-    }
-
-    // Program Kerja
-    if (programData.length > 0) {
-      html += `
-        <div class="profil">
-          <i class="fas fa-bullseye big"></i>
-          <h3>Program Kerja</h3>
-          <ul>
-            ${programData.map(item => `
-              <li>${item.Deskripsi || item.Program || ''}</li>
-            `).join('')}
-          </ul>
-        </div>
-      `;
-    }
-
-    // Jika masih kosong, tampilkan default
-    if (!html) {
-      html = `
-        <div class="profil">
-          <i class="fas fa-eye big"></i>
-          <h3>Visi &amp; Misi</h3>
-          <p><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
-          <br>
-          <p><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
-        </div>
-        <div class="profil">
-          <i class="fas fa-users big"></i>
-          <h3>Struktur Organisasi</h3>
-          <ul>
-            <li><strong>Ketua:</strong> Nurhayati, S.ST., M.Kes</li>
-            <li><strong>Sekretaris:</strong> Dewi Sartika, S.ST.</li>
-            <li><strong>Bendahara:</strong> Rina Marlina, S.ST.</li>
-            <li><strong>Koord. Bidang:</strong> Yuni Astuti, S.ST., M.Kes</li>
-          </ul>
-        </div>
-        <div class="profil">
-          <i class="fas fa-bullseye big"></i>
-          <h3>Program Kerja</h3>
-          <ul>
-            <li>Pendidikan &amp; Pelatihan Berkelanjutan</li>
-            <li>Advokasi Kebijakan Kesehatan</li>
-            <li>Pengabdian Masyarakat</li>
-            <li>Peningkatan Kesejahteraan Anggota</li>
-          </ul>
-        </div>
-      `;
-    }
-
-    container.innerHTML = html;
-  }
-
-  // ============================================
-  // FUNGSI UPDATE KEANGGOTAAN DARI GOOGLE SHEETS
-  // ============================================
-  function updateKeanggotaan(data) {
-    const container = document.getElementById('keanggotaanContainer');
-    
-    if (data.length === 0) {
-      container.innerHTML = `
-        <div class="kbox">
-          <div class="ic"><i class="fas fa-user-md"></i></div>
-          <h3>Bidan Profesional</h3>
-          <p>Bergabunglah dengan komunitas bidan profesional di Kota Bengkulu.</p>
-          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Hubungi Kami</a>
-        </div>
-        <div class="kbox">
-          <div class="ic"><i class="fas fa-hand-holding-heart"></i></div>
-          <h3>Pengabdian Masyarakat</h3>
-          <p>Ikut serta dalam kegiatan pengabdian masyarakat untuk kesehatan ibu dan anak.</p>
-          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Daftar</a>
-        </div>
-        <div class="kbox">
-          <div class="ic"><i class="fas fa-graduation-cap"></i></div>
-          <h3>Pelatihan &amp; Sertifikasi</h3>
-          <p>Dapatkan pelatihan dan sertifikasi untuk meningkatkan kompetensi profesional.</p>
-          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Lihat Jadwal</a>
-        </div>
-      `;
-      return;
-    }
-
-    // Ikon untuk setiap item
-    const icons = ['user-md', 'hand-holding-heart', 'graduation-cap', 'stethoscope', 'heartbeat', 'users'];
-    
-    container.innerHTML = data.slice(0, 3).map((item, index) => `
-      <div class="kbox">
-        <div class="ic"><i class="fas fa-${item.Ikon || icons[index % icons.length]}"></i></div>
-        <h3>${item.Judul || 'Keanggotaan'}</h3>
-        <p>${item.Deskripsi || ''}</p>
-        <a href="${item.Link || '#kontak'}" class="btn-sm"><i class="fas fa-arrow-right"></i> ${item.Tombol || 'Selengkapnya'}</a>
-      </div>
-    `).join('');
-  }
-
-  // ============================================
-  // FUNGSI UPDATE KONTEN LAINNYA (sama seperti sebelumnya)
-  // ============================================
-
-  function updateBerita(data) {
-    const container = document.getElementById('beritaContainer');
-    const aktifBerita = data.filter(item => 
-      (item.Status || '').toLowerCase() === 'aktif' || !item.Status
-    );
-    
-    if (aktifBerita.length === 0) {
-      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada berita terbaru.</p>`;
-      return;
-    }
-
-    const latest = aktifBerita.slice(0, 3);
-    const icons = ['newspaper', 'stethoscope', 'hands-helping'];
-    
-    container.innerHTML = latest.map((item, index) => `
-      <article class="card">
-        <div class="media"><i class="fas fa-${icons[index % icons.length]}"></i></div>
-        <div class="body">
-          <h3>${item.Judul || 'Berita'}</h3>
-          <p>${item.Deskripsi || ''}</p>
-          <div class="meta">
-            <span><i class="far fa-calendar"></i>${item.Tanggal || ''}</span>
-            <span><i class="far fa-eye"></i>${item.Views || '0'}</span>
-          </div>
-        </div>
-      </article>
-    `).join('');
-  }
-
-  function updateEvent(data) {
-    const container = document.getElementById('eventContainer');
-    const aktifEvent = data.filter(item => {
-      const status = (item.Status || '').toLowerCase();
-      return status === 'akan datang' || status === 'berlangsung' || status === 'aktif' || !item.Status;
-    });
-    
-    if (aktifEvent.length === 0) {
-      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada event mendatang.</p>`;
-      return;
-    }
-
-    const latest = aktifEvent.slice(0, 3);
-    
-    container.innerHTML = latest.map(item => `
-      <div class="event">
-        <div class="date"><i class="far fa-calendar"></i> ${item['Tanggal Mulai'] || ''} ${item['Tanggal Selesai'] ? '- ' + item['Tanggal Selesai'] : ''}</div>
-        <h3>${item['Nama Event'] || 'Event'}</h3>
-        <p>${item.Deskripsi || ''}</p>
-        ${item.Lokasi ? `<small style="display:block;margin-top:8px;color:var(--muted);"><i class="fas fa-map-marker-alt"></i> ${item.Lokasi}</small>` : ''}
-      </div>
-    `).join('');
-  }
-
-  function updatePrestasi(data) {
-    const container = document.getElementById('prestasiContainer');
-    const aktifPrestasi = data.filter(item => {
-      const status = (item.Status || '').toLowerCase();
-      return status === 'aktif' || !item.Status;
-    });
-    
-    if (aktifPrestasi.length === 0) {
-      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada prestasi.</p>`;
-      return;
-    }
-
-    container.innerHTML = aktifPrestasi.slice(0, 3).map(item => `
-      <div class="prestasi">
-        <div class="aw"><i class="fas fa-award"></i></div>
-        <h4>${item['Nama Prestasi'] || 'Prestasi'}</h4>
-        <p>${item.Pencapaian || ''}</p>
-        <small style="display:block;margin-top:8px;color:var(--accent-2);font-weight:600;">${item.Tahun || ''} ${item.Tingkat ? '• ' + item.Tingkat : ''}</small>
-      </div>
-    `).join('');
-  }
-
-  function updateKarya(data) {
-    const container = document.getElementById('karyaContainer');
-    if (data.length === 0) {
-      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada karya/inovasi.</p>`;
-      return;
-    }
-
-    const icons = ['mobile-alt', 'book', 'stethoscope', 'heartbeat', 'microscope', 'flask'];
-    
-    container.innerHTML = data.slice(0, 3).map((item, index) => `
-      <div class="karya">
-        <i class="fas fa-${icons[index % icons.length]}"></i>
-        <h4>${item['Judul Karya'] || 'Karya'}</h4>
-        <p>${item.Deskripsi || ''}</p>
-        <small style="display:block;margin-top:8px;color:var(--accent-2);">${item.Tahun || ''} ${item.Jenis ? '• ' + item.Jenis : ''}</small>
-      </div>
-    `).join('');
-  }
-
   function updateInfo(data) {
     const info = {};
     data.forEach(item => {
@@ -779,6 +515,279 @@
       document.getElementById('websitePusat').href = info.website_pusat;
     }
     if (info.footer_text) document.getElementById('footerText').textContent = info.footer_text;
+  }
+
+  // ============================================
+  // FUNGSI UPDATE BERITA
+  // ============================================
+  function updateBerita(data) {
+    const container = document.getElementById('beritaContainer');
+    
+    if (data.length === 0) {
+      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada berita terbaru.</p>`;
+      return;
+    }
+
+    const aktifBerita = data.filter(item => 
+      (item.Status || '').toLowerCase() === 'aktif' || !item.Status
+    );
+    
+    const latest = aktifBerita.slice(0, 3);
+    const icons = ['newspaper', 'stethoscope', 'hands-helping'];
+    
+    container.innerHTML = latest.map((item, index) => `
+      <article class="card">
+        <div class="media"><i class="fas fa-${icons[index % icons.length]}"></i></div>
+        <div class="body">
+          <h3>${item.Judul || 'Berita'}</h3>
+          <p>${item.Deskripsi || ''}</p>
+          <div class="meta">
+            <span><i class="far fa-calendar"></i>${item.Tanggal || ''}</span>
+            <span><i class="far fa-eye"></i>${item.Views || '0'}</span>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  // ============================================
+  // FUNGSI UPDATE EVENT
+  // ============================================
+  function updateEvent(data) {
+    const container = document.getElementById('eventContainer');
+    
+    if (data.length === 0) {
+      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada event mendatang.</p>`;
+      return;
+    }
+
+    const aktifEvent = data.filter(item => {
+      const status = (item.Status || '').toLowerCase();
+      return status === 'akan datang' || status === 'berlangsung' || status === 'aktif' || !item.Status;
+    });
+    
+    const latest = aktifEvent.slice(0, 3);
+    
+    container.innerHTML = latest.map(item => `
+      <div class="event">
+        <div class="date"><i class="far fa-calendar"></i> ${item['Tanggal Mulai'] || ''} ${item['Tanggal Selesai'] ? '- ' + item['Tanggal Selesai'] : ''}</div>
+        <h3>${item['Nama Event'] || 'Event'}</h3>
+        <p>${item.Deskripsi || ''}</p>
+        ${item.Lokasi ? `<small style="display:block;margin-top:8px;color:var(--muted);"><i class="fas fa-map-marker-alt"></i> ${item.Lokasi}</small>` : ''}
+      </div>
+    `).join('');
+  }
+
+  // ============================================
+  // FUNGSI UPDATE PRESTASI
+  // ============================================
+  function updatePrestasi(data) {
+    const container = document.getElementById('prestasiContainer');
+    
+    if (data.length === 0) {
+      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada prestasi.</p>`;
+      return;
+    }
+
+    const aktifPrestasi = data.filter(item => {
+      const status = (item.Status || '').toLowerCase();
+      return status === 'aktif' || !item.Status;
+    });
+    
+    container.innerHTML = aktifPrestasi.slice(0, 3).map(item => `
+      <div class="prestasi">
+        <div class="aw"><i class="fas fa-award"></i></div>
+        <h4>${item['Nama Prestasi'] || 'Prestasi'}</h4>
+        <p>${item.Pencapaian || ''}</p>
+        <small style="display:block;margin-top:8px;color:var(--accent-2);font-weight:600;">${item.Tahun || ''} ${item.Tingkat ? '• ' + item.Tingkat : ''}</small>
+      </div>
+    `).join('');
+  }
+
+  // ============================================
+  // FUNGSI UPDATE KARYA
+  // ============================================
+  function updateKarya(data) {
+    const container = document.getElementById('karyaContainer');
+    
+    if (data.length === 0) {
+      container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada karya/inovasi.</p>`;
+      return;
+    }
+
+    const icons = ['mobile-alt', 'book', 'stethoscope', 'heartbeat', 'microscope', 'flask'];
+    
+    container.innerHTML = data.slice(0, 3).map((item, index) => `
+      <div class="karya">
+        <i class="fas fa-${icons[index % icons.length]}"></i>
+        <h4>${item['Judul Karya'] || 'Karya'}</h4>
+        <p>${item.Deskripsi || ''}</p>
+        <small style="display:block;margin-top:8px;color:var(--accent-2);">${item.Tahun || ''} ${item.Jenis ? '• ' + item.Jenis : ''}</small>
+      </div>
+    `).join('');
+  }
+
+  // ============================================
+  // FUNGSI UPDATE PROFIL
+  // ============================================
+  function updateProfil(data) {
+    const container = document.getElementById('profilContainer');
+    
+    if (data.length === 0) {
+      container.innerHTML = `
+        <div class="profil">
+          <i class="fas fa-eye big"></i>
+          <h3>Visi &amp; Misi</h3>
+          <p><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
+          <br>
+          <p><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
+        </div>
+        <div class="profil">
+          <i class="fas fa-users big"></i>
+          <h3>Struktur Organisasi</h3>
+          <ul>
+            <li><strong>Ketua:</strong> Nurhayati, S.ST., M.Kes</li>
+            <li><strong>Sekretaris:</strong> Dewi Sartika, S.ST.</li>
+            <li><strong>Bendahara:</strong> Rina Marlina, S.ST.</li>
+            <li><strong>Koord. Bidang:</strong> Yuni Astuti, S.ST., M.Kes</li>
+          </ul>
+        </div>
+        <div class="profil">
+          <i class="fas fa-bullseye big"></i>
+          <h3>Program Kerja</h3>
+          <ul>
+            <li>Pendidikan &amp; Pelatihan Berkelanjutan</li>
+            <li>Advokasi Kebijakan Kesehatan</li>
+            <li>Pengabdian Masyarakat</li>
+            <li>Peningkatan Kesejahteraan Anggota</li>
+          </ul>
+        </div>
+      `;
+      return;
+    }
+
+    const visiData = data.find(item => item.Tipe === 'Visi');
+    const misiData = data.find(item => item.Tipe === 'Misi');
+    const strukturData = data.filter(item => item.Tipe === 'Struktur');
+    const programData = data.filter(item => item.Tipe === 'Program');
+
+    let html = '';
+
+    if (visiData || misiData) {
+      html += `
+        <div class="profil">
+          <i class="fas fa-eye big"></i>
+          <h3>Visi &amp; Misi</h3>
+          ${visiData ? `<p><strong>Visi:</strong> ${visiData.Deskripsi || visiData.Value || ''}</p>` : ''}
+          ${visiData && misiData ? '<br>' : ''}
+          ${misiData ? `<p><strong>Misi:</strong> ${misiData.Deskripsi || misiData.Value || ''}</p>` : ''}
+        </div>
+      `;
+    }
+
+    if (strukturData.length > 0) {
+      html += `
+        <div class="profil">
+          <i class="fas fa-users big"></i>
+          <h3>Struktur Organisasi</h3>
+          <ul>
+            ${strukturData.map(item => `
+              <li><strong>${item.Jabatan || 'Anggota'}:</strong> ${item.Nama || item.Deskripsi || ''}</li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    if (programData.length > 0) {
+      html += `
+        <div class="profil">
+          <i class="fas fa-bullseye big"></i>
+          <h3>Program Kerja</h3>
+          <ul>
+            ${programData.map(item => `
+              <li>${item.Deskripsi || item.Program || ''}</li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    if (!html) {
+      html = `
+        <div class="profil">
+          <i class="fas fa-eye big"></i>
+          <h3>Visi &amp; Misi</h3>
+          <p><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
+          <br>
+          <p><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
+        </div>
+        <div class="profil">
+          <i class="fas fa-users big"></i>
+          <h3>Struktur Organisasi</h3>
+          <ul>
+            <li><strong>Ketua:</strong> Nurhayati, S.ST., M.Kes</li>
+            <li><strong>Sekretaris:</strong> Dewi Sartika, S.ST.</li>
+            <li><strong>Bendahara:</strong> Rina Marlina, S.ST.</li>
+            <li><strong>Koord. Bidang:</strong> Yuni Astuti, S.ST., M.Kes</li>
+          </ul>
+        </div>
+        <div class="profil">
+          <i class="fas fa-bullseye big"></i>
+          <h3>Program Kerja</h3>
+          <ul>
+            <li>Pendidikan &amp; Pelatihan Berkelanjutan</li>
+            <li>Advokasi Kebijakan Kesehatan</li>
+            <li>Pengabdian Masyarakat</li>
+            <li>Peningkatan Kesejahteraan Anggota</li>
+          </ul>
+        </div>
+      `;
+    }
+
+    container.innerHTML = html;
+  }
+
+  // ============================================
+  // FUNGSI UPDATE KEANGGOTAAN
+  // ============================================
+  function updateKeanggotaan(data) {
+    const container = document.getElementById('keanggotaanContainer');
+    
+    if (data.length === 0) {
+      container.innerHTML = `
+        <div class="kbox">
+          <div class="ic"><i class="fas fa-user-md"></i></div>
+          <h3>Bidan Profesional</h3>
+          <p>Bergabunglah dengan komunitas bidan profesional di Kota Bengkulu.</p>
+          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Hubungi Kami</a>
+        </div>
+        <div class="kbox">
+          <div class="ic"><i class="fas fa-hand-holding-heart"></i></div>
+          <h3>Pengabdian Masyarakat</h3>
+          <p>Ikut serta dalam kegiatan pengabdian masyarakat untuk kesehatan ibu dan anak.</p>
+          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Daftar</a>
+        </div>
+        <div class="kbox">
+          <div class="ic"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Pelatihan &amp; Sertifikasi</h3>
+          <p>Dapatkan pelatihan dan sertifikasi untuk meningkatkan kompetensi profesional.</p>
+          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Lihat Jadwal</a>
+        </div>
+      `;
+      return;
+    }
+
+    const icons = ['user-md', 'hand-holding-heart', 'graduation-cap', 'stethoscope', 'heartbeat', 'users'];
+    
+    container.innerHTML = data.slice(0, 3).map((item, index) => `
+      <div class="kbox">
+        <div class="ic"><i class="fas fa-${item.Ikon || icons[index % icons.length]}"></i></div>
+        <h3>${item.Judul || 'Keanggotaan'}</h3>
+        <p>${item.Deskripsi || ''}</p>
+        <a href="${item.Link || '#kontak'}" class="btn-sm"><i class="fas fa-arrow-right"></i> ${item.Tombol || 'Selengkapnya'}</a>
+      </div>
+    `).join('');
   }
 
   // ============================================
