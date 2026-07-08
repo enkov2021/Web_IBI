@@ -31,7 +31,8 @@
   header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.1);padding:2px 0}
   nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
   .logo{display:flex;align-items:center;gap:12px;min-width:0}
-  .logo-icon{width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:700;flex-shrink:0}
+  .logo-icon{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#fff;display:flex;align-items:center;justify-content:center;border:2px solid var(--primary)}
+  .logo-icon img{width:100%;height:100%;object-fit:contain;padding:2px}
   .logo-text h1{font-size:15px;color:var(--primary);font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .logo-text span{font-size:11px;color:var(--muted)}
   .nav-links{display:flex;gap:26px;list-style:none}
@@ -179,7 +180,10 @@
   <div class="container">
     <nav>
       <a href="#beranda" class="logo">
-        <div class="logo-icon">IBI</div>
+        <div class="logo-icon">
+          <!-- LOGO GAMBAR IBI -->
+          img src="logo_ibi.jpeg" alt="Logo IBI" /> />
+        </div>
         <div class="logo-text">
           <h1>IBI Ranting Raflesia</h1>
           <span>Kota Bengkulu</span>
