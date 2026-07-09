@@ -198,6 +198,88 @@
   .weblink{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)}
   .weblink a{color:var(--primary);font-weight:500}
 
+  /* PENDAFTARAN BOX */
+  .pendaftaran-box{
+    background:linear-gradient(135deg,#fff,#fdfaf7);
+    border-radius:20px;
+    padding:40px;
+    box-shadow:var(--shadow);
+    text-align:center;
+    max-width:900px;
+    margin:0 auto;
+    border:2px solid var(--border);
+  }
+  .pendaftaran-box .icon-big{
+    font-size:48px;
+    color:var(--primary);
+    margin-bottom:16px;
+    display:block;
+  }
+  .pendaftaran-box h3{
+    color:var(--primary);
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:12px;
+  }
+  .pendaftaran-box .desc{
+    color:var(--muted);
+    font-size:15px;
+    margin-bottom:24px;
+    line-height:1.8;
+  }
+  .pendaftaran-box .btn-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    justify-content:center;
+  }
+  .pendaftaran-box .btn-group .btn{
+    min-width:200px;
+    justify-content:center;
+    padding:14px 28px;
+    font-size:15px;
+  }
+  .pendaftaran-box .btn-kta-v1{
+    background:var(--accent);
+    color:#3a2410;
+  }
+  .pendaftaran-box .btn-kta-v1:hover{
+    background:var(--accent-2);
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px rgba(0,0,0,.15);
+  }
+  .pendaftaran-box .btn-kta-v2{
+    background:var(--primary);
+    color:#fff;
+  }
+  .pendaftaran-box .btn-kta-v2:hover{
+    background:var(--primary-2);
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px rgba(0,0,0,.15);
+  }
+  .pendaftaran-box .btn-admin{
+    background:transparent;
+    color:var(--primary);
+    border:2px solid var(--primary);
+  }
+  .pendaftaran-box .btn-admin:hover{
+    background:var(--primary);
+    color:#fff;
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px rgba(0,0,0,.15);
+  }
+  .pendaftaran-box .info-bawah{
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--muted);
+  }
+  .pendaftaran-box .info-bawah i{
+    color:var(--accent-2);
+    margin-right:6px;
+  }
+
   /* FOOTER */
   footer{background:linear-gradient(135deg,#3d0c20,var(--primary));color:#fff;padding:26px 0;text-align:center;font-size:14px}
   footer .container{opacity:.9}
@@ -218,6 +300,8 @@
     section.sec{padding:60px 0}
     .hero{padding:110px 0 70px;min-height:auto}
     .contact-card{padding:24px}
+    .pendaftaran-box{padding:24px 16px;}
+    .pendaftaran-box .btn-group .btn{min-width:100%;}
   }
 </style>
 </head>
@@ -320,33 +404,32 @@
   <div class="container">
     <div class="sec-head">
       <h2 id="keanggotaanTitle">Info Keanggotaan</h2>
-      <p id="keanggotaanDesc">Daftar menjadi anggota IBI Ranting Raflesia dan nikmati berbagai manfaat.</p>
+      <p id="keanggotaanDesc">Pendaftaran dan perpanjangan keanggotaan IBI Ranting Raflesia Kota Bengkulu.</p>
     </div>
-    <div class="grid g-3" id="keanggotaanContainer">
-      <!-- Keanggotaan akan di-load dari Google Sheets -->
-    </div>
-    <!-- TOMBOL KTA & VA - DITAMBAHKAN DI BAWAH -->
-    <div style="text-align:center;margin-top:40px;padding:20px;background:#fff;border-radius:16px;box-shadow:var(--shadow);">
-      <h3 style="color:var(--primary);font-size:20px;margin-bottom:16px;">
-        <i class="fas fa-id-card"></i> Pendaftaran Anggota
-      </h3>
-      <p style="color:var(--muted);margin-bottom:20px;font-size:14px;">
-        Akses sistem pendaftaran dan pembayaran keanggotaan IBI Ranting Raflesia
+    
+    <!-- PENDAFTARAN ANGGOTA - SATU-SATUNYA KONTEN DI SINI -->
+    <div class="pendaftaran-box">
+      <span class="icon-big"><i class="fas fa-id-card"></i></span>
+      <h3>Pendaftaran Anggota IBI</h3>
+      <p class="desc">
+        Akses sistem Kartu Tanda Anggota (KTA) dan pembayaran Virtual Account (VA) 
+        untuk pendaftaran baru atau perpanjangan keanggotaan IBI Ranting Raflesia Kota Bengkulu.
       </p>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
-        <a href="https://ibi.data-online.id/apps/" target="_blank" rel="noopener" class="btn btn-primary" style="min-width:180px;">
+      <div class="btn-group">
+        <a href="https://ibi.data-online.id/apps/" target="_blank" rel="noopener" class="btn btn-kta-v1">
           <i class="fas fa-id-card"></i> KTA (Versi 1)
         </a>
-        <a href="https://ibi.data-online.id/apps/v2" target="_blank" rel="noopener" class="btn" style="background:#8b1e3f;color:#fff;min-width:180px;border:none;">
+        <a href="https://ibi.data-online.id/apps/v2" target="_blank" rel="noopener" class="btn btn-kta-v2">
           <i class="fas fa-id-card"></i> KTA (Versi 2)
         </a>
-        <a href="#kontak" class="btn btn-outline" style="border-color:var(--primary);color:var(--primary);min-width:180px;">
-          <i class="fas fa-phone"></i> Hubungi Admin
+        <a href="#kontak" class="btn btn-admin">
+          <i class="fas fa-headset"></i> Hubungi Admin
         </a>
       </div>
-      <p style="margin-top:16px;font-size:12px;color:var(--muted);">
-        <i class="fas fa-info-circle"></i> Untuk pendaftaran baru atau perpanjangan keanggotaan
-      </p>
+      <div class="info-bawah">
+        <i class="fas fa-info-circle"></i> 
+        Untuk informasi lebih lanjut tentang pendaftaran, silakan hubungi admin melalui kontak yang tersedia.
+      </div>
     </div>
   </div>
 </section>
@@ -476,7 +559,7 @@
       const prestasiData = parseCSV(prestasiRes.data);
       const karyaData = parseCSV(karyaRes.data);
       const profilData = parseCSV(profilRes.data);
-      const keanggotaanData = parseCSV(keanggotaanRes.data);
+      // Keanggotaan tidak digunakan lagi karena sudah diganti dengan box pendaftaran
 
       // Update konten
       updateInfo(infoData);
@@ -485,7 +568,6 @@
       updatePrestasi(prestasiData);
       updateKarya(karyaData);
       updateProfil(profilData);
-      updateKeanggotaan(keanggotaanData);
 
       // Sembunyikan loading
       document.getElementById('loading').classList.add('hide');
@@ -825,48 +907,6 @@
     }
 
     container.innerHTML = html;
-  }
-
-  // ============================================
-  // FUNGSI UPDATE KEANGGOTAAN
-  // ============================================
-  function updateKeanggotaan(data) {
-    const container = document.getElementById('keanggotaanContainer');
-    
-    if (data.length === 0) {
-      container.innerHTML = `
-        <div class="kbox">
-          <div class="ic"><i class="fas fa-user-md"></i></div>
-          <h3>Bidan Profesional</h3>
-          <p>Bergabunglah dengan komunitas bidan profesional di Kota Bengkulu.</p>
-          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Hubungi Kami</a>
-        </div>
-        <div class="kbox">
-          <div class="ic"><i class="fas fa-hand-holding-heart"></i></div>
-          <h3>Pengabdian Masyarakat</h3>
-          <p>Ikut serta dalam kegiatan pengabdian masyarakat untuk kesehatan ibu dan anak.</p>
-          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Daftar</a>
-        </div>
-        <div class="kbox">
-          <div class="ic"><i class="fas fa-graduation-cap"></i></div>
-          <h3>Pelatihan &amp; Sertifikasi</h3>
-          <p>Dapatkan pelatihan dan sertifikasi untuk meningkatkan kompetensi profesional.</p>
-          <a href="#kontak" class="btn-sm"><i class="fas fa-arrow-right"></i> Lihat Jadwal</a>
-        </div>
-      `;
-      return;
-    }
-
-    const icons = ['user-md', 'hand-holding-heart', 'graduation-cap', 'stethoscope', 'heartbeat', 'users'];
-    
-    container.innerHTML = data.slice(0, 3).map((item, index) => `
-      <div class="kbox">
-        <div class="ic"><i class="fas fa-${item.Ikon || icons[index % icons.length]}"></i></div>
-        <h3>${item.Judul || 'Keanggotaan'}</h3>
-        <p>${item.Deskripsi || ''}</p>
-        <a href="${item.Link || '#kontak'}" class="btn-sm"><i class="fas fa-arrow-right"></i> ${item.Tombol || 'Selengkapnya'}</a>
-      </div>
-    `).join('');
   }
 
   // ============================================
