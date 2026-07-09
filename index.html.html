@@ -101,7 +101,13 @@
 .hero h1 { font-size: clamp(28px,5vw,56px); font-weight: 800; line-height: 1.15; margin-bottom: 16px; }
 .hero h1 .hi { color: var(--accent); }
 .hero .lead { font-size: clamp(16px,2.2vw,22px); opacity: .95; margin-bottom: 8px; font-weight: 300; }
-.hero p.sub { font-size: 15px; opacity: .85; max-width: 620px; margin: 0 auto 30px; }
+.hero p.sub { 
+  font-size: 15px; 
+  opacity: .85; 
+  max-width: 620px; 
+  margin: 0 auto 30px; 
+  display: none; /* Sembunyikan sub */
+}
 .hero .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .btn {
     display: inline-flex;
@@ -366,8 +372,9 @@
   <div class="container">
     <div class="badge"><i class="fas fa-sparkles"></i> <span id="heroBadge">Ikatan Bidan Indonesia</span></div>
     <h1>Selamat Datang di <span class="hi" id="heroTitle">IBI Ranting Raflesia</span> Kota Bengkulu</h1>
-    <p class="lead" id="heroLead">Mitra Kesehatan Ibu dan Anak</p>
-    <p class="sub" id="heroDesc">Bersama kita wujudkan bidan profesional, berdaya saing, dan berdedikasi tinggi untuk kesehatan ibu dan anak di Kota Bengkulu.</p>
+    <!-- LEAD dan SUB disembunyikan -->
+    <p class="lead" id="heroLead" style="display:none;"></p>
+    <p class="sub" id="heroDesc" style="display:none;"></p>
     <div class="cta">
       <a href="#keanggotaan" class="btn btn-primary">Daftar Anggota <i class="fas fa-arrow-right"></i></a>
       <a href="#profil" class="btn btn-outline">Profil Kami</a>
@@ -542,14 +549,13 @@
   async function loadData() {
     try {
       // Load semua data secara paralel
-      const [infoRes, beritaRes, eventRes, prestasiRes, karyaRes, profilRes, keanggotaanRes] = await Promise.all([
+      const [infoRes, beritaRes, eventRes, prestasiRes, karyaRes, profilRes] = await Promise.all([
         axios.get(CONFIG.INFO),
         axios.get(CONFIG.BERITA),
         axios.get(CONFIG.EVENT),
         axios.get(CONFIG.PRESTASI),
         axios.get(CONFIG.KARYA),
-        axios.get(CONFIG.PROFIL),
-        axios.get(CONFIG.KEANGGOTAAN)
+        axios.get(CONFIG.PROFIL)
       ]);
 
       // Parse CSV masing-masing
@@ -559,7 +565,6 @@
       const prestasiData = parseCSV(prestasiRes.data);
       const karyaData = parseCSV(karyaRes.data);
       const profilData = parseCSV(profilRes.data);
-      // Keanggotaan tidak digunakan lagi karena sudah diganti dengan box pendaftaran
 
       // Update konten
       updateInfo(infoData);
@@ -637,11 +642,10 @@
       info[item.Key] = item.Value;
     });
 
-    // Update Hero
+    // Update Hero - hanya badge dan judul yang ditampilkan
     if (info.hero_badge) document.getElementById('heroBadge').textContent = info.hero_badge;
     if (info.hero_title) document.getElementById('heroTitle').textContent = info.hero_title;
-    if (info.hero_lead) document.getElementById('heroLead').textContent = info.hero_lead;
-    if (info.hero_desc) document.getElementById('heroDesc').textContent = info.hero_desc;
+    // hero_lead dan hero_desc disembunyikan (style display:none)
 
     // Update Section Titles
     if (info.profil_title) document.getElementById('profilTitle').textContent = info.profil_title;
