@@ -543,7 +543,6 @@
   <div class="container">
     <div class="sec-head">
       <h2 id="profilTitle">Profil Ranting Raflesia</h2>
-      <p id="profilSub" style="font-size:14px;color:var(--muted);">Struktur Organisasi</p>
     </div>
     <!-- GALERI FOTO SAMPING (KIRI & KANAN) -->
     <div class="galeri-samping">
@@ -874,7 +873,7 @@
 
     const grouped = {};
     strukturData.forEach(item => {
-      const divisi = item.Divisi || 'Lainnya';
+      const divisi = item.Divisi || 'Struktur Organisasi';
       if (!grouped[divisi]) grouped[divisi] = [];
       grouped[divisi].push({ nama: item.Nama, jabatan: item.Jabatan || '' });
     });
