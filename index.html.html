@@ -100,14 +100,8 @@
 .hero .badge i { color: var(--accent); }
 .hero h1 { font-size: clamp(28px,5vw,56px); font-weight: 800; line-height: 1.15; margin-bottom: 16px; }
 .hero h1 .hi { color: var(--accent); }
-.hero .lead { font-size: clamp(16px,2.2vw,22px); opacity: .95; margin-bottom: 8px; font-weight: 300; }
-.hero p.sub { 
-  font-size: 15px; 
-  opacity: .85; 
-  max-width: 620px; 
-  margin: 0 auto 30px; 
-  display: none; /* Sembunyikan sub */
-}
+.hero .lead { display: none; }
+.hero p.sub { display: none; }
 .hero .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .btn {
     display: inline-flex;
@@ -153,6 +147,7 @@
   .card .meta{margin-top:16px;display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
   .card .meta i{margin-right:5px}
 
+  /* PROFIL & STRUKTUR */
   .profil{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:30px;text-align:center;transition:.3s}
   .profil:hover{transform:translateY(-6px);box-shadow:var(--shadow-hover)}
   .profil i.big{font-size:38px;color:var(--primary);margin-bottom:14px}
@@ -161,6 +156,91 @@
   .profil ul{list-style:disc;padding-left:20px}
   .profil ul li{margin-bottom:6px}
   .profil strong{color:var(--primary)}
+
+  /* STRUKTUR ORGANISASI */
+  .struktur-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:24px;
+    margin-top:10px;
+  }
+  .struktur-card{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:24px;
+    transition:.3s;
+    border-top:4px solid var(--accent);
+  }
+  .struktur-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow-hover);
+  }
+  .struktur-card .divisi{
+    font-size:15px;
+    font-weight:700;
+    color:var(--primary);
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .struktur-card .divisi i{
+    font-size:18px;
+    color:var(--accent-2);
+  }
+  .struktur-card .anggota{
+    padding-left:0;
+    list-style:none;
+  }
+  .struktur-card .anggota li{
+    padding:8px 0;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
+    color:#2b1a20;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .struktur-card .anggota li:last-child{
+    border-bottom:none;
+  }
+  .struktur-card .anggota .jabatan{
+    font-weight:600;
+    color:var(--primary);
+    font-size:12px;
+    background:var(--light);
+    padding:2px 10px;
+    border-radius:999px;
+  }
+  .struktur-card .anggota .nama{
+    flex:1;
+    margin-right:10px;
+  }
+  .struktur-utama{
+    grid-column:1/-1;
+    background:linear-gradient(135deg,var(--primary),var(--primary-2));
+    color:#fff;
+    border-top-color:#fff;
+    text-align:center;
+  }
+  .struktur-utama .divisi{
+    color:#fff;
+    justify-content:center;
+  }
+  .struktur-utama .divisi i{color:var(--accent);}
+  .struktur-utama .anggota li{
+    color:#fff;
+    border-bottom-color:rgba(255,255,255,.2);
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .struktur-utama .anggota .jabatan{
+    background:rgba(255,255,255,.2);
+    color:#fff;
+  }
+  .struktur-utama .anggota .nama{color:#fff;}
 
   .keangg{background:linear-gradient(135deg,var(--light),#fff);}
   .kbox{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:32px;text-align:center;transition:.3s;display:flex;flex-direction:column}
@@ -308,6 +388,8 @@
     .contact-card{padding:24px}
     .pendaftaran-box{padding:24px 16px;}
     .pendaftaran-box .btn-group .btn{min-width:100%;}
+    .struktur-container{grid-template-columns:1fr;}
+    .struktur-utama{grid-column:1;}
   }
 </style>
 </head>
@@ -372,9 +454,6 @@
   <div class="container">
     <div class="badge"><i class="fas fa-sparkles"></i> <span id="heroBadge">Ikatan Bidan Indonesia</span></div>
     <h1>Selamat Datang di <span class="hi" id="heroTitle">IBI Ranting Raflesia</span> Kota Bengkulu</h1>
-    <!-- LEAD dan SUB disembunyikan -->
-    <p class="lead" id="heroLead" style="display:none;"></p>
-    <p class="sub" id="heroDesc" style="display:none;"></p>
     <div class="cta">
       <a href="#keanggotaan" class="btn btn-primary">Daftar Anggota <i class="fas fa-arrow-right"></i></a>
       <a href="#profil" class="btn btn-outline">Profil Kami</a>
@@ -399,9 +478,12 @@
 <!-- PROFIL -->
 <section class="sec" id="profil">
   <div class="container">
-    <div class="sec-head"><h2 id="profilTitle">Profil Ranting Raflesia</h2></div>
-    <div class="grid g-3" id="profilContainer">
-      <!-- Profil akan di-load dari Google Sheets -->
+    <div class="sec-head">
+      <h2 id="profilTitle">Profil Ranting Raflesia</h2>
+      <p id="profilSub" style="font-size:14px;color:var(--muted);">Struktur Organisasi Masa Bakti 2023-2028</p>
+    </div>
+    <div id="profilContainer">
+      <!-- Struktur organisasi akan di-load dari Google Sheets atau menggunakan default -->
     </div>
   </div>
 </section>
@@ -413,8 +495,6 @@
       <h2 id="keanggotaanTitle">Info Keanggotaan</h2>
       <p id="keanggotaanDesc">Pendaftaran dan perpanjangan keanggotaan IBI Ranting Raflesia Kota Bengkulu.</p>
     </div>
-    
-    <!-- PENDAFTARAN ANGGOTA - SATU-SATUNYA KONTEN DI SINI -->
     <div class="pendaftaran-box">
       <span class="icon-big"><i class="fas fa-id-card"></i></span>
       <h3>Pendaftaran Anggota IBI</h3>
@@ -531,7 +611,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   // ============================================
-  // KONFIGURASI GOOGLE SHEETS - MASING-MASING SHEET
+  // KONFIGURASI GOOGLE SHEETS
   // ============================================
   const CONFIG = {
     INFO: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=296493223&single=true&output=csv",
@@ -544,11 +624,28 @@
   };
 
   // ============================================
-  // FUNGSI LOAD DATA DARI MASING-MASING SHEET
+  // DATA STRUKTUR DEFAULT (sesuai gambar)
+  // ============================================
+  const DEFAULT_STRUKTUR = [
+    { Divisi: 'Ketua', Nama: 'Neng Kurniati, S.S.T., S.K.M., M.Tr.Keb', Jabatan: 'Ketua' },
+    { Divisi: 'Sekretaris', Nama: 'Rolyndiah Afriliani, SST', Jabatan: 'Sekretaris' },
+    { Divisi: 'Bendahara', Nama: 'Yulianthi, SST', Jabatan: 'Bendahara' },
+    { Divisi: 'Tim Teknis', Nama: 'Tim Teknis', Jabatan: '' },
+    { Divisi: 'Seksi Humas dan Advokasi', Nama: 'Erika Pebriyanti, S.S.T., M.K.M', Jabatan: 'Koordinator' },
+    { Divisi: 'Seksi Humas dan Advokasi', Nama: 'Nurrobikha, S.S.T., M.K.M', Jabatan: 'Anggota' },
+    { Divisi: 'Seksi Pendidikan dan Pelatihan', Nama: 'Suriyati, S.S.T., M.Keb', Jabatan: 'Koordinator' },
+    { Divisi: 'Seksi Pendidikan dan Pelatihan', Nama: 'Fitri Ramadhaniati, S.S.T., M.Keb', Jabatan: 'Anggota' },
+    { Divisi: 'Seksi Pelayanan', Nama: 'Erli Zainal, S.S.T., M.Keb', Jabatan: 'Koordinator' },
+    { Divisi: 'Seksi Pelayanan', Nama: "Sa'arfia Ayu, S.S.T", Jabatan: 'Anggota' },
+    { Divisi: 'Seksi Penelitian dan Pengembangan Organisasi', Nama: 'Linda Yulyani, S.S.T., M.Keb', Jabatan: 'Koordinator' },
+    { Divisi: 'Seksi Penelitian dan Pengembangan Organisasi', Nama: 'Miftahul Jannah, S.S.T., MKM', Jabatan: 'Anggota' }
+  ];
+
+  // ============================================
+  // FUNGSI LOAD DATA
   // ============================================
   async function loadData() {
     try {
-      // Load semua data secara paralel
       const [infoRes, beritaRes, eventRes, prestasiRes, karyaRes, profilRes] = await Promise.all([
         axios.get(CONFIG.INFO),
         axios.get(CONFIG.BERITA),
@@ -558,7 +655,6 @@
         axios.get(CONFIG.PROFIL)
       ]);
 
-      // Parse CSV masing-masing
       const infoData = parseCSV(infoRes.data);
       const beritaData = parseCSV(beritaRes.data);
       const eventData = parseCSV(eventRes.data);
@@ -566,7 +662,6 @@
       const karyaData = parseCSV(karyaRes.data);
       const profilData = parseCSV(profilRes.data);
 
-      // Update konten
       updateInfo(infoData);
       updateBerita(beritaData);
       updateEvent(eventData);
@@ -574,9 +669,7 @@
       updateKarya(karyaData);
       updateProfil(profilData);
 
-      // Sembunyikan loading
       document.getElementById('loading').classList.add('hide');
-
     } catch (error) {
       console.error('Gagal memuat data:', error);
       document.getElementById('loading').innerHTML = `
@@ -593,13 +686,9 @@
     }
   }
 
-  // ============================================
-  // FUNGSI PARSE CSV
-  // ============================================
   function parseCSV(csv) {
     const lines = csv.split('\n').filter(line => line.trim() !== '');
     if (lines.length < 2) return [];
-    
     const headers = parseCSVLine(lines[0]);
     const result = [];
     for (let i = 1; i < lines.length; i++) {
@@ -617,37 +706,27 @@
     const result = [];
     let current = '';
     let inQuotes = false;
-    
     for (let i = 0; i < line.length; i++) {
       const char = line[i];
-      if (char === '"') {
-        inQuotes = !inQuotes;
-      } else if (char === ',' && !inQuotes) {
+      if (char === '"') inQuotes = !inQuotes;
+      else if (char === ',' && !inQuotes) {
         result.push(current.trim());
         current = '';
-      } else {
-        current += char;
-      }
+      } else current += char;
     }
     result.push(current.trim());
     return result;
   }
 
   // ============================================
-  // FUNGSI UPDATE INFO (HERO, TITLE, KONTAK, DLL)
+  // UPDATE INFO
   // ============================================
   function updateInfo(data) {
     const info = {};
-    data.forEach(item => {
-      info[item.Key] = item.Value;
-    });
+    data.forEach(item => { info[item.Key] = item.Value; });
 
-    // Update Hero - hanya badge dan judul yang ditampilkan
     if (info.hero_badge) document.getElementById('heroBadge').textContent = info.hero_badge;
     if (info.hero_title) document.getElementById('heroTitle').textContent = info.hero_title;
-    // hero_lead dan hero_desc disembunyikan (style display:none)
-
-    // Update Section Titles
     if (info.profil_title) document.getElementById('profilTitle').textContent = info.profil_title;
     if (info.berita_title) document.getElementById('beritaTitle').textContent = info.berita_title;
     if (info.berita_desc) document.getElementById('beritaDesc').textContent = info.berita_desc;
@@ -662,7 +741,6 @@
     if (info.kontak_title) document.getElementById('kontakTitle').textContent = info.kontak_title;
     if (info.kontak_desc) document.getElementById('kontakDesc').textContent = info.kontak_desc;
 
-    // Update Kontak
     if (info.alamat) document.getElementById('alamat').innerHTML = info.alamat.replace(/\n/g, '<br>');
     if (info.email) {
       document.getElementById('email').textContent = info.email;
@@ -680,29 +758,105 @@
       document.getElementById('websitePusat').href = info.website_pusat;
     }
     if (info.footer_text) document.getElementById('footerText').textContent = info.footer_text;
+    if (info.profil_sub) document.getElementById('profilSub').textContent = info.profil_sub;
   }
 
   // ============================================
-  // FUNGSI UPDATE BERITA
+  // UPDATE PROFIL (STRUKTUR ORGANISASI)
+  // ============================================
+  function updateProfil(data) {
+    const container = document.getElementById('profilContainer');
+
+    // Ambil data struktur dari sheet (filter Tipe = 'Struktur')
+    let strukturData = data.filter(item => item.Tipe && item.Tipe.toLowerCase() === 'struktur');
+
+    // Jika tidak ada data dari sheet, gunakan default
+    if (strukturData.length === 0) {
+      strukturData = DEFAULT_STRUKTUR.map(item => ({
+        Divisi: item.Divisi,
+        Nama: item.Nama,
+        Jabatan: item.Jabatan || ''
+      }));
+    }
+
+    // Kelompokkan berdasarkan Divisi
+    const grouped = {};
+    strukturData.forEach(item => {
+      const divisi = item.Divisi || 'Lainnya';
+      if (!grouped[divisi]) grouped[divisi] = [];
+      grouped[divisi].push({ nama: item.Nama, jabatan: item.Jabatan || '' });
+    });
+
+    // Urutan divisi yang diinginkan (untuk tampilan)
+    const urutanDivisi = ['Ketua', 'Sekretaris', 'Bendahara', 'Tim Teknis', 
+                          'Seksi Humas dan Advokasi', 'Seksi Pendidikan dan Pelatihan', 
+                          'Seksi Pelayanan', 'Seksi Penelitian dan Pengembangan Organisasi'];
+
+    // Buat HTML
+    let html = `<div class="struktur-container">`;
+
+    // Tampilkan sesuai urutan
+    urutanDivisi.forEach(divisi => {
+      if (grouped[divisi]) {
+        const isUtama = ['Ketua', 'Sekretaris', 'Bendahara'].includes(divisi);
+        const cardClass = isUtama ? 'struktur-card struktur-utama' : 'struktur-card';
+        html += `<div class="${cardClass}">`;
+        html += `<div class="divisi"><i class="fas ${getIconDivisi(divisi)}"></i> ${divisi}</div>`;
+        html += `<ul class="anggota">`;
+        grouped[divisi].forEach(anggota => {
+          const jabatanDisplay = anggota.jabatan ? `<span class="jabatan">${anggota.jabatan}</span>` : '';
+          html += `<li><span class="nama">${anggota.nama}</span> ${jabatanDisplay}</li>`;
+        });
+        html += `</ul></div>`;
+        delete grouped[divisi];
+      }
+    });
+
+    // Tampilkan divisi lain yang tidak ada di urutan
+    Object.keys(grouped).forEach(divisi => {
+      html += `<div class="struktur-card">`;
+      html += `<div class="divisi"><i class="fas fa-users"></i> ${divisi}</div>`;
+      html += `<ul class="anggota">`;
+      grouped[divisi].forEach(anggota => {
+        const jabatanDisplay = anggota.jabatan ? `<span class="jabatan">${anggota.jabatan}</span>` : '';
+        html += `<li><span class="nama">${anggota.nama}</span> ${jabatanDisplay}</li>`;
+      });
+      html += `</ul></div>`;
+    });
+
+    html += `</div>`;
+    container.innerHTML = html;
+  }
+
+  function getIconDivisi(divisi) {
+    const map = {
+      'Ketua': 'fa-user-tie',
+      'Sekretaris': 'fa-file-alt',
+      'Bendahara': 'fa-coins',
+      'Tim Teknis': 'fa-cogs',
+      'Seksi Humas dan Advokasi': 'fa-bullhorn',
+      'Seksi Pendidikan dan Pelatihan': 'fa-graduation-cap',
+      'Seksi Pelayanan': 'fa-hand-holding-heart',
+      'Seksi Penelitian dan Pengembangan Organisasi': 'fa-flask'
+    };
+    return map[divisi] || 'fa-users';
+  }
+
+  // ============================================
+  // UPDATE BERITA, EVENT, PRESTASI, KARYA
   // ============================================
   function updateBerita(data) {
     const container = document.getElementById('beritaContainer');
-    
     if (data.length === 0) {
       container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada berita terbaru.</p>`;
       return;
     }
-
-    const aktifBerita = data.filter(item => 
-      (item.Status || '').toLowerCase() === 'aktif' || !item.Status
-    );
-    
-    const latest = aktifBerita.slice(0, 3);
+    const aktif = data.filter(item => (item.Status || '').toLowerCase() === 'aktif' || !item.Status);
+    const latest = aktif.slice(0, 3);
     const icons = ['newspaper', 'stethoscope', 'hands-helping'];
-    
-    container.innerHTML = latest.map((item, index) => `
+    container.innerHTML = latest.map((item, idx) => `
       <article class="card">
-        <div class="media"><i class="fas fa-${icons[index % icons.length]}"></i></div>
+        <div class="media"><i class="fas fa-${icons[idx % icons.length]}"></i></div>
         <div class="body">
           <h3>${item.Judul || 'Berita'}</h3>
           <p>${item.Deskripsi || ''}</p>
@@ -715,24 +869,17 @@
     `).join('');
   }
 
-  // ============================================
-  // FUNGSI UPDATE EVENT
-  // ============================================
   function updateEvent(data) {
     const container = document.getElementById('eventContainer');
-    
     if (data.length === 0) {
       container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada event mendatang.</p>`;
       return;
     }
-
-    const aktifEvent = data.filter(item => {
-      const status = (item.Status || '').toLowerCase();
-      return status === 'akan datang' || status === 'berlangsung' || status === 'aktif' || !item.Status;
+    const aktif = data.filter(item => {
+      const s = (item.Status || '').toLowerCase();
+      return s === 'akan datang' || s === 'berlangsung' || s === 'aktif' || !item.Status;
     });
-    
-    const latest = aktifEvent.slice(0, 3);
-    
+    const latest = aktif.slice(0, 3);
     container.innerHTML = latest.map(item => `
       <div class="event">
         <div class="date"><i class="far fa-calendar"></i> ${item['Tanggal Mulai'] || ''} ${item['Tanggal Selesai'] ? '- ' + item['Tanggal Selesai'] : ''}</div>
@@ -743,23 +890,14 @@
     `).join('');
   }
 
-  // ============================================
-  // FUNGSI UPDATE PRESTASI
-  // ============================================
   function updatePrestasi(data) {
     const container = document.getElementById('prestasiContainer');
-    
     if (data.length === 0) {
       container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada prestasi.</p>`;
       return;
     }
-
-    const aktifPrestasi = data.filter(item => {
-      const status = (item.Status || '').toLowerCase();
-      return status === 'aktif' || !item.Status;
-    });
-    
-    container.innerHTML = aktifPrestasi.slice(0, 3).map(item => `
+    const aktif = data.filter(item => (item.Status || '').toLowerCase() === 'aktif' || !item.Status);
+    container.innerHTML = aktif.slice(0, 3).map(item => `
       <div class="prestasi">
         <div class="aw"><i class="fas fa-award"></i></div>
         <h4>${item['Nama Prestasi'] || 'Prestasi'}</h4>
@@ -769,22 +907,16 @@
     `).join('');
   }
 
-  // ============================================
-  // FUNGSI UPDATE KARYA
-  // ============================================
   function updateKarya(data) {
     const container = document.getElementById('karyaContainer');
-    
     if (data.length === 0) {
       container.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada karya/inovasi.</p>`;
       return;
     }
-
     const icons = ['mobile-alt', 'book', 'stethoscope', 'heartbeat', 'microscope', 'flask'];
-    
-    container.innerHTML = data.slice(0, 3).map((item, index) => `
+    container.innerHTML = data.slice(0, 3).map((item, idx) => `
       <div class="karya">
-        <i class="fas fa-${icons[index % icons.length]}"></i>
+        <i class="fas fa-${icons[idx % icons.length]}"></i>
         <h4>${item['Judul Karya'] || 'Karya dan Inovasi'}</h4>
         <p>${item.Deskripsi || ''}</p>
         <small style="display:block;margin-top:8px;color:var(--accent-2);">${item.Tahun || ''} ${item.Jenis ? '• ' + item.Jenis : ''}</small>
@@ -793,158 +925,22 @@
   }
 
   // ============================================
-  // FUNGSI UPDATE PROFIL
-  // ============================================
-  function updateProfil(data) {
-    const container = document.getElementById('profilContainer');
-    
-    if (data.length === 0) {
-      container.innerHTML = `
-        <div class="profil">
-          <i class="fas fa-eye big"></i>
-          <h3>Visi &amp; Misi</h3>
-          <p><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
-          <br>
-          <p><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
-        </div>
-        <div class="profil">
-          <i class="fas fa-users big"></i>
-          <h3>Struktur Organisasi</h3>
-          <ul>
-            <li><strong>Ketua:</strong> Nurhayati, S.ST., M.Kes</li>
-            <li><strong>Sekretaris:</strong> Dewi Sartika, S.ST.</li>
-            <li><strong>Bendahara:</strong> Rina Marlina, S.ST.</li>
-            <li><strong>Koord. Bidang:</strong> Yuni Astuti, S.ST., M.Kes</li>
-          </ul>
-        </div>
-        <div class="profil">
-          <i class="fas fa-bullseye big"></i>
-          <h3>Program Kerja</h3>
-          <ul>
-            <li>Pendidikan &amp; Pelatihan Berkelanjutan</li>
-            <li>Advokasi Kebijakan Kesehatan</li>
-            <li>Pengabdian Masyarakat</li>
-            <li>Peningkatan Kesejahteraan Anggota</li>
-          </ul>
-        </div>
-      `;
-      return;
-    }
-
-    const visiData = data.find(item => item.Tipe === 'Visi');
-    const misiData = data.find(item => item.Tipe === 'Misi');
-    const strukturData = data.filter(item => item.Tipe === 'Struktur');
-    const programData = data.filter(item => item.Tipe === 'Program');
-
-    let html = '';
-
-    if (visiData || misiData) {
-      html += `
-        <div class="profil">
-          <i class="fas fa-eye big"></i>
-          <h3>Visi &amp; Misi</h3>
-          ${visiData ? `<p><strong>Visi:</strong> ${visiData.Deskripsi || visiData.Value || ''}</p>` : ''}
-          ${visiData && misiData ? '<br>' : ''}
-          ${misiData ? `<p><strong>Misi:</strong> ${misiData.Deskripsi || misiData.Value || ''}</p>` : ''}
-        </div>
-      `;
-    }
-
-    if (strukturData.length > 0) {
-      html += `
-        <div class="profil">
-          <i class="fas fa-users big"></i>
-          <h3>Struktur Organisasi</h3>
-          <ul>
-            ${strukturData.map(item => `
-              <li><strong>${item.Jabatan || 'Anggota'}:</strong> ${item.Nama || item.Deskripsi || ''}</li>
-            `).join('')}
-          </ul>
-        </div>
-      `;
-    }
-
-    if (programData.length > 0) {
-      html += `
-        <div class="profil">
-          <i class="fas fa-bullseye big"></i>
-          <h3>Program Kerja</h3>
-          <ul>
-            ${programData.map(item => `
-              <li>${item.Deskripsi || item.Program || ''}</li>
-            `).join('')}
-          </ul>
-        </div>
-      `;
-    }
-
-    if (!html) {
-      html = `
-        <div class="profil">
-          <i class="fas fa-eye big"></i>
-          <h3>Visi &amp; Misi</h3>
-          <p><strong>Visi:</strong> Menjadi organisasi profesi bidan yang unggul, mandiri, dan profesional di Kota Bengkulu.</p>
-          <br>
-          <p><strong>Misi:</strong> Meningkatkan kompetensi, advokasi, dan kesejahteraan anggota, serta berkontribusi bagi kesehatan ibu dan anak.</p>
-        </div>
-        <div class="profil">
-          <i class="fas fa-users big"></i>
-          <h3>Struktur Organisasi</h3>
-          <ul>
-            <li><strong>Ketua:</strong> Nurhayati, S.ST., M.Kes</li>
-            <li><strong>Sekretaris:</strong> Dewi Sartika, S.ST.</li>
-            <li><strong>Bendahara:</strong> Rina Marlina, S.ST.</li>
-            <li><strong>Koord. Bidang:</strong> Yuni Astuti, S.ST., M.Kes</li>
-          </ul>
-        </div>
-        <div class="profil">
-          <i class="fas fa-bullseye big"></i>
-          <h3>Program Kerja</h3>
-          <ul>
-            <li>Pendidikan &amp; Pelatihan Berkelanjutan</li>
-            <li>Advokasi Kebijakan Kesehatan</li>
-            <li>Pengabdian Masyarakat</li>
-            <li>Peningkatan Kesejahteraan Anggota</li>
-          </ul>
-        </div>
-      `;
-    }
-
-    container.innerHTML = html;
-  }
-
-  // ============================================
-  // HEADER SCROLL & BACK TO TOP
+  // SCROLL & MENU
   // ============================================
   const header = document.getElementById('header');
   const topBtn = document.getElementById('topBtn');
-  
   window.addEventListener('scroll', () => {
     if (window.scrollY > 40) header.classList.add('scrolled');
     else header.classList.remove('scrolled');
-    
     if (window.scrollY > 400) topBtn.classList.add('show');
     else topBtn.classList.remove('show');
   });
 
-  // ============================================
-  // MOBILE MENU
-  // ============================================
-  function openMenu() {
-    document.getElementById('mobileMenu').classList.add('open');
-  }
-  function closeMenu() {
-    document.getElementById('mobileMenu').classList.remove('open');
-  }
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
 
-  // ============================================
-  // JALANKAN LOAD DATA
-  // ============================================
   document.addEventListener('DOMContentLoaded', loadData);
-  
-  // Auto refresh setiap 5 menit
   setInterval(loadData, 300000);
 </script>
-
 </body>
 </html>
