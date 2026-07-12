@@ -808,38 +808,114 @@
             font-size: 14px;
         }
 
-        /* PRESTASI */
-        .prestasi {
+        /* ===== KONSUL BIDAN (Pengganti Prestasi) ===== */
+        .konsul {
             background: #fff;
             border-radius: 16px;
-            padding: 26px;
-            text-align: center;
+            padding: 24px;
             box-shadow: var(--shadow);
-            transition: .3s;
+            transition: .35s;
+            border-left: 5px solid var(--accent);
+            display: flex;
+            flex-direction: column;
         }
-        .prestasi:hover {
+        .konsul:hover {
             transform: translateY(-6px);
             box-shadow: var(--shadow-hover);
         }
-        .prestasi .aw {
+        .konsul .konsul-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+        .konsul .konsul-header .avatar {
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            background: rgba(212, 165, 116, .2);
-            color: var(--accent-2);
+            background: var(--light);
             display: grid;
             place-items: center;
-            font-size: 24px;
-            margin: 0 auto 12px;
-        }
-        .prestasi h4 {
+            font-size: 26px;
             color: var(--primary);
-            font-size: 16px;
-            margin-bottom: 8px;
+            flex-shrink: 0;
+            overflow: hidden;
         }
-        .prestasi p {
+        .konsul .konsul-header .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .konsul .konsul-header .name {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 17px;
+        }
+        .konsul .konsul-header .name small {
+            display: block;
+            font-weight: 400;
+            font-size: 13px;
             color: var(--muted);
+        }
+        .konsul .spesialisasi {
+            display: inline-block;
+            background: var(--light);
+            color: var(--primary);
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            align-self: flex-start;
+        }
+        .konsul .desc {
             font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 12px;
+            flex: 1;
+        }
+        .konsul .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #2b1a20;
+            margin-top: 4px;
+        }
+        .konsul .info-row i {
+            color: var(--accent-2);
+            width: 18px;
+            text-align: center;
+        }
+        .konsul .info-row a {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .konsul .info-row a:hover {
+            text-decoration: underline;
+        }
+        .konsul .status-badge {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+        .konsul .status-badge .aktif {
+            color: #2b7a4b;
+            background: #e3f5ec;
+            padding: 2px 14px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+        .konsul .status-badge .tidak-aktif {
+            color: #a04040;
+            background: #fde8e8;
+            padding: 2px 14px;
+            border-radius: 999px;
+            font-weight: 600;
         }
 
         /* KONTAK */
@@ -1078,6 +1154,13 @@
             .pendaftaran-box .btn-group .btn {
                 min-width: 100%;
             }
+            .konsul .konsul-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .konsul .spesialisasi {
+                align-self: center;
+            }
         }
     </style>
 </head>
@@ -1108,7 +1191,7 @@
                     <li><a href="#keanggotaan">Keanggotaan</a></li>
                     <li><a href="#event">Event</a></li>
                     <li><a href="#karya">Karya &amp; Inovasi</a></li>
-                    <li><a href="#prestasi">Prestasi</a></li>
+                    <li><a href="#konsul">Konsul Bidan</a></li>
                     <li><a href="#kontak">Kontak</a></li>
                 </ul>
                 <button class="menu-btn" onclick="openMenu()" aria-label="Menu"><i class="fas fa-bars"></i></button>
@@ -1131,7 +1214,7 @@
                 <li><a href="#keanggotaan" onclick="closeMenu()">Keanggotaan</a></li>
                 <li><a href="#event" onclick="closeMenu()">Event</a></li>
                 <li><a href="#karya" onclick="closeMenu()">Karya &amp; Inovasi</a></li>
-                <li><a href="#prestasi" onclick="closeMenu()">Prestasi</a></li>
+                <li><a href="#konsul" onclick="closeMenu()">Konsul Bidan</a></li>
                 <li><a href="#kontak" onclick="closeMenu()">Kontak</a></li>
             </ul>
         </aside>
@@ -1229,10 +1312,10 @@
                 </p>
                 <div class="btn-group">
                     <a href="https://ibi.data-online.id/apps/" target="_blank" rel="noopener" class="btn btn-kta-v1">
-                        <i class="fas fa-id-card"></i> KTA (Versi 1)
+                        <i class="fas fa-id-card"></i> KTA
                     </a>
                     <a href="https://ibi.data-online.id/apps/v2" target="_blank" rel="noopener" class="btn btn-kta-v2">
-                        <i class="fas fa-id-card"></i> KTA (Versi 2)
+                        <i class="fas fa-id-card"></i> VA
                     </a>
                     <a href="#kontak" class="btn btn-admin">
                         <i class="fas fa-headset"></i> Hubungi Admin
@@ -1272,15 +1355,15 @@
         </div>
     </section>
 
-    <!-- PRESTASI -->
-    <section class="sec alt" id="prestasi">
+    <!-- ===== KONSUL BIDAN (Pengganti Prestasi) ===== -->
+    <section class="sec alt" id="konsul">
         <div class="container">
             <div class="sec-head">
-                <h2 id="prestasiTitle">Prestasi</h2>
-                <p id="prestasiDesc">Penghargaan dan prestasi yang telah diraih oleh IBI Ranting Raflesia.</p>
+                <h2 id="konsulTitle">Konsul Bidan</h2>
+                <p id="konsulDesc">Layanan konsultasi dengan bidan-bidan profesional dari IBI Ranting Raflesia Kota Bengkulu.</p>
             </div>
-            <div class="grid g-3" id="prestasiContainer">
-                <!-- Prestasi akan di-load dari Google Sheets -->
+            <div class="grid g-3" id="konsulContainer">
+                <!-- Konsul Bidan akan di-load dari Google Sheets -->
             </div>
         </div>
     </section>
@@ -1338,7 +1421,7 @@
             INFO: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=296493223&single=true&output=csv",
             BERITA: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1303563060&single=true&output=csv",
             EVENT: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1756905762&single=true&output=csv",
-            PRESTASI: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1709962990&single=true&output=csv",
+            KONSUL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1709962990&single=true&output=csv",
             KARYA: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1840968040&single=true&output=csv",
             PROFIL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=2095719796&single=true&output=csv"
         };
@@ -1365,11 +1448,11 @@
         // ============================================
         async function loadData() {
             try {
-                const [infoRes, beritaRes, eventRes, prestasiRes, karyaRes, profilRes] = await Promise.all([
+                const [infoRes, beritaRes, eventRes, konsulRes, karyaRes, profilRes] = await Promise.all([
                     axios.get(CONFIG.INFO),
                     axios.get(CONFIG.BERITA),
                     axios.get(CONFIG.EVENT),
-                    axios.get(CONFIG.PRESTASI),
+                    axios.get(CONFIG.KONSUL),
                     axios.get(CONFIG.KARYA),
                     axios.get(CONFIG.PROFIL)
                 ]);
@@ -1377,14 +1460,14 @@
                 const infoData = parseCSV(infoRes.data);
                 const beritaData = parseCSV(beritaRes.data);
                 const eventData = parseCSV(eventRes.data);
-                const prestasiData = parseCSV(prestasiRes.data);
+                const konsulData = parseCSV(konsulRes.data);
                 const karyaData = parseCSV(karyaRes.data);
                 const profilData = parseCSV(profilRes.data);
 
                 updateInfo(infoData);
                 updateBerita(beritaData);
                 updateEvent(eventData);
-                updatePrestasi(prestasiData);
+                updateKonsul(konsulData);
                 updateKarya(karyaData);
                 updateProfil(profilData);
 
@@ -1454,8 +1537,8 @@
             if (info.event_desc) document.getElementById('eventDesc').textContent = info.event_desc;
             if (info.karya_title) document.getElementById('karyaTitle').textContent = info.karya_title;
             if (info.karya_desc) document.getElementById('karyaDesc').textContent = info.karya_desc;
-            if (info.prestasi_title) document.getElementById('prestasiTitle').textContent = info.prestasi_title;
-            if (info.prestasi_desc) document.getElementById('prestasiDesc').textContent = info.prestasi_desc;
+            if (info.konsul_title) document.getElementById('konsulTitle').textContent = info.konsul_title;
+            if (info.konsul_desc) document.getElementById('konsulDesc').textContent = info.konsul_desc;
             if (info.keanggotaan_title) document.getElementById('keanggotaanTitle').textContent = info.keanggotaan_title;
             if (info.keanggotaan_desc) document.getElementById('keanggotaanDesc').textContent = info.keanggotaan_desc;
             if (info.kontak_title) document.getElementById('kontakTitle').textContent = info.kontak_title;
@@ -1521,7 +1604,7 @@
             html += `<div class="struktur-utama">`;
             urutanUtama.forEach(divisi => {
                 if (grouped[divisi]) {
-                    const anggota = grouped[divisi][0]; // ambil pertama (seharusnya hanya satu)
+                    const anggota = grouped[divisi][0];
                     html += `
                             <div class="struktur-card">
                                 <div class="divisi"><i class="fas ${getIconDivisi(divisi)}"></i> ${divisi}</div>
@@ -1588,13 +1671,13 @@
         }
 
         // ============================================
-        // UPDATE BERITA, EVENT, PRESTASI, KARYA
+        // UPDATE BERITA, EVENT, KONSUL, KARYA
         // ============================================
         function updateBerita(data) {
             const container = document.getElementById('beritaContainer');
             if (data.length === 0) {
                 container.innerHTML =
-                `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada berita terbaru.</p>`;
+                    `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada berita terbaru.</p>`;
                 return;
             }
             const aktif = data.filter(item => (item.Status || '').toLowerCase() === 'aktif' || !item.Status);
@@ -1619,7 +1702,7 @@
             const container = document.getElementById('eventContainer');
             if (data.length === 0) {
                 container.innerHTML =
-                `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada event mendatang.</p>`;
+                    `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada event mendatang.</p>`;
                 return;
             }
             const aktif = data.filter(item => {
@@ -1637,29 +1720,73 @@
                 `).join('');
         }
 
-        function updatePrestasi(data) {
-            const container = document.getElementById('prestasiContainer');
+        // ===== KONSUL BIDAN =====
+        function updateKonsul(data) {
+            const container = document.getElementById('konsulContainer');
             if (data.length === 0) {
                 container.innerHTML =
-                `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada prestasi.</p>`;
+                    `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada data konsul bidan.</p>`;
                 return;
             }
-            const aktif = data.filter(item => (item.Status || '').toLowerCase() === 'aktif' || !item.Status);
-            container.innerHTML = aktif.slice(0, 3).map(item => `
-                    <div class="prestasi">
-                        <div class="aw"><i class="fas fa-award"></i></div>
-                        <h4>${item['Nama Prestasi'] || 'Prestasi'}</h4>
-                        <p>${item.Pencapaian || ''}</p>
-                        <small style="display:block;margin-top:8px;color:var(--accent-2);font-weight:600;">${item.Tahun || ''} ${item.Tingkat ? '• ' + item.Tingkat : ''}</small>
-                    </div>
-                `).join('');
+            // Filter hanya yang status 'Aktif' atau tanpa status
+            const aktif = data.filter(item => {
+                const s = (item.Status || '').toLowerCase();
+                return s === 'aktif' || s === 'active' || !item.Status;
+            });
+
+            if (aktif.length === 0) {
+                container.innerHTML =
+                    `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada bidan yang tersedia untuk konsultasi.</p>`;
+                return;
+            }
+
+            const icons = ['fa-user-md', 'fa-user-nurse', 'fa-heartbeat', 'fa-stethoscope', 'fa-baby', 'fa-hand-holding-heart'];
+
+            container.innerHTML = aktif.map((item, idx) => {
+                const nama = item['Nama Bidan'] || 'Bidan';
+                const spesialisasi = item['Spesialisasi'] || 'Kesehatan Ibu dan Anak';
+                const jadwal = item['Jadwal'] || '';
+                const kontak = item['Kontak'] || '';
+                const deskripsi = item['Deskripsi'] || '';
+                const foto = item['Foto'] || '';
+                const status = item['Status'] || 'Aktif';
+                const isAktif = status.toLowerCase() === 'aktif' || status.toLowerCase() === 'active';
+
+                // Avatar: gunakan foto jika ada, else inisial
+                let avatarHtml = '';
+                if (foto) {
+                    avatarHtml = `<img src="${foto}" alt="${nama}">`;
+                } else {
+                    const inisial = nama.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+                    avatarHtml = `<span style="font-size:18px;font-weight:700;color:var(--primary);">${inisial}</span>`;
+                }
+
+                return `
+                        <div class="konsul">
+                            <div class="konsul-header">
+                                <div class="avatar">${avatarHtml}</div>
+                                <div>
+                                    <div class="name">${nama} <small>Bidan</small></div>
+                                </div>
+                            </div>
+                            <span class="spesialisasi"><i class="fas fa-briefcase-medical"></i> ${spesialisasi}</span>
+                            ${deskripsi ? `<p class="desc">${deskripsi}</p>` : ''}
+                            ${jadwal ? `<div class="info-row"><i class="fas fa-clock"></i> ${jadwal}</div>` : ''}
+                            ${kontak ? `<div class="info-row"><i class="fas fa-phone-alt"></i> <a href="tel:${kontak}">${kontak}</a></div>` : ''}
+                            <div class="status-badge">
+                                <span class="${isAktif ? 'aktif' : 'tidak-aktif'}">${isAktif ? '● Aktif' : '● Tidak Aktif'}</span>
+                                <span style="color:var(--muted);font-size:11px;"><i class="far fa-calendar-alt"></i> Konsultasi tersedia</span>
+                            </div>
+                        </div>
+                    `;
+            }).join('');
         }
 
         function updateKarya(data) {
             const container = document.getElementById('karyaContainer');
             if (data.length === 0) {
                 container.innerHTML =
-                `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada karya/inovasi.</p>`;
+                    `<p style="text-align:center;grid-column:1/-1;color:var(--muted);">Belum ada karya/inovasi.</p>`;
                 return;
             }
             const icons = ['mobile-alt', 'book', 'stethoscope', 'heartbeat', 'microscope', 'flask'];
