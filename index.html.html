@@ -6,36 +6,84 @@
     <title>IBI Ranting Raflesia Kota Bengkulu</title>
     <meta name="description" content="Website resmi Ikatan Bidan Indonesia (IBI) Ranting Raflesia Kota Bengkulu - Organisasi Profesi Bidan." />
     
-    <!-- ============================================================ -->
     <!-- GOOGLE SEARCH CONSOLE VERIFICATION -->
-    <!-- ============================================================ -->
     <meta name="google-site-verification" content="rgA9Uap4oc18RwUkRROwQHYYAuLRSIM0Q1T--st5p9c" />
     
-    <!-- ============================================================ -->
-    <!-- SEO OPTIMIZATION - Meta Tags untuk Google & Sosial Media     -->
-    <!-- ============================================================ -->
+    <!-- SEO -->
     <meta name="robots" content="index, follow" />
     <meta name="author" content="IBI Ranting Raflesia Kota Bengkulu" />
-    <link rel="canonical" href="https://ibi-ranting-raflesia.vercel.app/" />
+    <link rel="canonical" href="https://ibirantingraflesiakotabengkulu.vercel.app/" />
     
-    <!-- Open Graph / Facebook -->
+    <!-- SITEMAP JSON-LD (CARA PALING CEPAT) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://ibirantingraflesiakotabengkulu.vercel.app/",
+      "name": "IBI Ranting Raflesia Kota Bengkulu",
+      "description": "Website resmi Ikatan Bidan Indonesia (IBI) Ranting Raflesia Kota Bengkulu",
+      "author": {
+        "@type": "Organization",
+        "name": "IBI Ranting Raflesia Kota Bengkulu"
+      }
+    }
+    </script>
+    
+    <!-- BREADCRUMB UNTUK GOOGLE -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "https://ibirantingraflesiakotabengkulu.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Berita",
+          "item": "https://ibirantingraflesiakotabengkulu.vercel.app/#berita"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Profil",
+          "item": "https://ibirantingraflesiakotabengkulu.vercel.app/#profil"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Keanggotaan",
+          "item": "https://ibirantingraflesiakotabengkulu.vercel.app/#keanggotaan"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Event",
+          "item": "https://ibirantingraflesiakotabengkulu.vercel.app/#event"
+        }
+      ]
+    }
+    </script>
+    
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ibi-ranting-raflesia.vercel.app/" />
+    <meta property="og:url" content="https://ibirantingraflesiakotabengkulu.vercel.app/" />
     <meta property="og:title" content="IBI Ranting Raflesia Kota Bengkulu" />
     <meta property="og:description" content="Website resmi Ikatan Bidan Indonesia (IBI) Ranting Raflesia Kota Bengkulu - Organisasi Profesi Bidan." />
-    <meta property="og:image" content="https://ibi-ranting-raflesia.vercel.app/logoo.png" />
+    <meta property="og:image" content="https://ibirantingraflesiakotabengkulu.vercel.app/logoo.png" />
     
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://ibi-ranting-raflesia.vercel.app/" />
+    <meta property="twitter:url" content="https://ibirantingraflesiakotabengkulu.vercel.app/" />
     <meta property="twitter:title" content="IBI Ranting Raflesia Kota Bengkulu" />
     <meta property="twitter:description" content="Website resmi Ikatan Bidan Indonesia (IBI) Ranting Raflesia Kota Bengkulu - Organisasi Profesi Bidan." />
-    <meta property="twitter:image" content="https://ibi-ranting-raflesia.vercel.app/logoo.png" />
+    <meta property="twitter:image" content="https://ibirantingraflesiakotabengkulu.vercel.app/logoo.png" />
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== S T Y L E  (tidak berubah) ===== */
         :root {
             --primary: #5e1230;
             --primary-2: #8b1e3f;
@@ -55,12 +103,10 @@
         a { text-decoration:none; color:inherit; }
         img { max-width:100%; display:block; }
         .container { width:92%; max-width:1200px; margin:0 auto; }
-        /* loading */
         .loading { position:fixed; inset:0; background:#fff; z-index:9999; display:grid; place-items:center; transition:opacity .5s; }
         .loading.hide { opacity:0; pointer-events:none; }
         .loading .spinner { width:50px; height:50px; border:4px solid var(--light); border-top:4px solid var(--primary); border-radius:50%; animation:spin 1s linear infinite; }
         @keyframes spin { to { transform:rotate(360deg); } }
-        /* header */
         header { position:fixed; top:0; left:0; right:0; background:rgba(255,255,255,.96); backdrop-filter:blur(10px); z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,.05); transition:.3s; }
         header.scrolled { box-shadow:0 4px 20px rgba(0,0,0,.1); padding:2px 0; }
         nav { display:flex; justify-content:space-between; align-items:center; padding:14px 0; }
@@ -87,7 +133,6 @@
         .mobile-menu li { border-bottom:1px solid var(--border); }
         .mobile-menu a { display:block; padding:14px 0; font-weight:600; color:#3a2a30; }
         .mobile-menu a:hover { color:var(--primary); }
-        /* hero */
         .hero { min-height:92vh; display:flex; align-items:center; text-align:left; color:#fff; padding:120px 0 80px; position:relative; background:linear-gradient(135deg,rgba(94,18,48,.92),rgba(139,30,63,.88)), url('rame.jpg') center/cover; }
         .hero .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
         .hero .hero-content .badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); padding:8px 18px; border-radius:999px; font-size:13px; font-weight:500; margin-bottom:22px; }
@@ -105,7 +150,6 @@
         .btn-outline:hover { background:#fff; color:var(--primary); }
         .scroll-down { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); color:#fff; font-size:28px; animation:bd 2s infinite; }
         @keyframes bd { 0%,100% { transform:translate(-50%,0); } 50% { transform:translate(-50%,10px); } }
-        /* sections */
         section.sec { padding:80px 0; }
         section.alt { background:var(--light); }
         .sec-head { text-align:center; max-width:720px; margin:0 auto 50px; }
@@ -115,7 +159,6 @@
         .grid { display:grid; gap:26px; }
         .g-3 { grid-template-columns:repeat(3,1fr); }
         .g-2 { grid-template-columns:repeat(2,1fr); }
-        /* cards */
         .card { background:var(--card); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; transition:.35s; }
         .card:hover { transform:translateY(-6px); box-shadow:var(--shadow-hover); }
         .card .media { height:170px; background:var(--light); display:grid; place-items:center; color:var(--primary); font-size:52px; }
@@ -124,7 +167,6 @@
         .card p { font-size:14px; color:var(--muted); }
         .card .meta { margin-top:16px; display:flex; justify-content:space-between; font-size:12px; color:var(--muted); }
         .card .meta i { margin-right:5px; }
-        /* foto gallery */
         .foto-gallery { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-bottom:48px; align-items:stretch; }
         .foto-gallery .foto-item { background:#fff; border-radius:20px; overflow:hidden; box-shadow:var(--shadow); transition:.35s; display:flex; flex-direction:column; }
         .foto-gallery .foto-item:hover { transform:translateY(-6px); box-shadow:var(--shadow-hover); }
@@ -135,7 +177,6 @@
         .foto-gallery .foto-item .caption h4 { color:var(--primary); font-size:16px; font-weight:700; margin-bottom:6px; }
         .foto-gallery .foto-item .caption p { color:var(--muted); font-size:14px; line-height:1.6; }
         .foto-gallery .foto-item .caption .label-tag { display:inline-block; margin-top:10px; background:var(--light); color:var(--primary); padding:4px 16px; border-radius:999px; font-size:12px; font-weight:600; }
-        /* struktur */
         .struktur-wrapper { margin-top:10px; }
         .struktur-utama { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:30px; }
         .struktur-utama .struktur-card { background:linear-gradient(135deg,var(--primary),var(--primary-2)); color:#fff; border-radius:16px; padding:28px 20px; text-align:center; box-shadow:var(--shadow); transition:.3s; }
@@ -153,7 +194,6 @@
         .struktur-seksi .struktur-card .anggota-list li:last-child { border-bottom:none; }
         @media (max-width:960px) { .struktur-utama { grid-template-columns:repeat(3,1fr); } .struktur-seksi { grid-template-columns:1fr 1fr; } .foto-gallery { grid-template-columns:1fr 1fr; } }
         @media (max-width:720px) { .struktur-utama { grid-template-columns:1fr; } .struktur-seksi { grid-template-columns:1fr; } .foto-gallery { grid-template-columns:1fr; } .hero .hero-grid { grid-template-columns:1fr; text-align:center; } .hero .hero-image .photo-frame { max-width:280px; margin:0 auto; } .hero .cta { justify-content:center; } }
-        /* keanggotaan */
         .keangg { background:linear-gradient(135deg,var(--light),#fff); }
         .pendaftaran-box { background:linear-gradient(135deg,#fff,#fdfaf7); border-radius:20px; padding:40px; box-shadow:var(--shadow); text-align:center; max-width:900px; margin:0 auto; border:2px solid var(--border); }
         .pendaftaran-box .icon-big { font-size:48px; color:var(--primary); margin-bottom:16px; display:block; }
@@ -169,19 +209,16 @@
         .pendaftaran-box .btn-admin:hover { background:var(--primary); color:#fff; transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.15); }
         .pendaftaran-box .info-bawah { margin-top:20px; padding-top:20px; border-top:1px solid var(--border); font-size:13px; color:var(--muted); }
         .pendaftaran-box .info-bawah i { color:var(--accent-2); margin-right:6px; }
-        /* event */
         .event { background:#fff; border-left:4px solid var(--accent); border-radius:12px; padding:22px; box-shadow:var(--shadow); transition:.3s; }
         .event:hover { transform:translateX(4px); }
         .event .date { color:var(--accent-2); font-weight:600; font-size:12px; margin-bottom:6px; display:inline-flex; align-items:center; gap:6px; }
         .event h3 { color:var(--primary); font-size:17px; margin-bottom:8px; }
         .event p { color:var(--muted); font-size:14px; }
-        /* karya */
         .karya { background:var(--light); border-radius:16px; padding:26px; text-align:center; box-shadow:var(--shadow); transition:.3s; }
         .karya:hover { transform:translateY(-6px); box-shadow:var(--shadow-hover); }
         .karya i { font-size:34px; color:var(--primary); margin-bottom:10px; }
         .karya h4 { color:var(--primary); font-size:16px; margin-bottom:8px; }
         .karya p { color:var(--muted); font-size:14px; }
-        /* konsul */
         .konsul { background:#fff; border-radius:16px; padding:24px; box-shadow:var(--shadow); transition:.35s; border-left:5px solid var(--accent); display:flex; flex-direction:column; }
         .konsul:hover { transform:translateY(-6px); box-shadow:var(--shadow-hover); }
         .konsul .konsul-header { display:flex; align-items:center; gap:14px; margin-bottom:12px; }
@@ -198,7 +235,6 @@
         .konsul .status-badge { margin-top:12px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:12px; }
         .konsul .status-badge .aktif { color:#2b7a4b; background:#e3f5ec; padding:2px 14px; border-radius:999px; font-weight:600; }
         .konsul .status-badge .tidak-aktif { color:#a04040; background:#fde8e8; padding:2px 14px; border-radius:999px; font-weight:600; }
-        /* kontak */
         .contact-card { background:#fff; border-radius:16px; padding:32px; box-shadow:var(--shadow); }
         .contact-card h3 { color:var(--primary); font-size:19px; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
         .cline { display:flex; gap:14px; margin-bottom:18px; }
@@ -222,10 +258,8 @@
     </style>
 </head>
 <body>
-    <!-- LOADING -->
     <div class="loading" id="loading"><div class="spinner"></div></div>
 
-    <!-- HEADER -->
     <header id="header">
         <div class="container">
             <nav>
@@ -248,7 +282,6 @@
         </div>
     </header>
 
-    <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="backdrop" onclick="closeMenu()"></div>
         <aside>
@@ -266,7 +299,6 @@
         </aside>
     </div>
 
-    <!-- HERO -->
     <section class="hero" id="beranda">
         <div class="container">
             <div class="hero-grid">
@@ -288,7 +320,6 @@
         <a href="#berita" class="scroll-down" aria-label="Scroll"><i class="fas fa-chevron-down"></i></a>
     </section>
 
-    <!-- BERITA -->
     <section class="sec alt" id="berita">
         <div class="container">
             <div class="sec-head">
@@ -299,7 +330,6 @@
         </div>
     </section>
 
-    <!-- PROFIL & STRUKTUR -->
     <section class="sec" id="profil">
         <div class="container">
             <div class="sec-head">
@@ -328,7 +358,6 @@
         </div>
     </section>
 
-    <!-- KEANGGOTAAN -->
     <section class="sec keangg" id="keanggotaan">
         <div class="container">
             <div class="sec-head">
@@ -361,7 +390,6 @@
         </div>
     </section>
 
-    <!-- EVENT -->
     <section class="sec alt" id="event">
         <div class="container">
             <div class="sec-head">
@@ -372,7 +400,6 @@
         </div>
     </section>
 
-    <!-- KARYA -->
     <section class="sec" id="karya">
         <div class="container">
             <div class="sec-head">
@@ -383,7 +410,6 @@
         </div>
     </section>
 
-    <!-- KONSUL BIDAN -->
     <section class="sec alt" id="konsul">
         <div class="container">
             <div class="sec-head">
@@ -394,7 +420,6 @@
         </div>
     </section>
 
-    <!-- KONTAK -->
     <section class="sec" id="kontak">
         <div class="container">
             <div class="sec-head">
@@ -429,19 +454,14 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <div class="container" id="footerText">© 2025 IBI Ranting Raflesia Kota Bengkulu. All rights reserved.</div>
     </footer>
 
     <button class="top" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Ke atas"><i class="fas fa-arrow-up"></i></button>
 
-    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        // ============================================================
-        //  KONFIGURASI URL GOOGLE SHEETS (GANTI DENGAN URL PUBLIKASI ANDA)
-        // ============================================================
         const CONFIG = {
             INFO: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=296493223&single=true&output=csv",
             BERITA: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=1303563060&single=true&output=csv",
@@ -451,9 +471,6 @@
             PROFIL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vStERo0eTTAbafr9IAFTy-43Vxf_7MwaRzSIsbp5zv3nv_HN4RGthB5Cht88IFhlg/pub?gid=2095719796&single=true&output=csv"
         };
 
-        // ============================================================
-        //  DATA DEFAULT STRUKTUR (jika sheet PROFIL kosong)
-        // ============================================================
         const DEFAULT_STRUKTUR = [
             { Divisi: 'Ketua', Nama: 'Neng Kurniati, S.S.T., S.K.M., M.Tr.Keb', Jabatan: 'Ketua' },
             { Divisi: 'Sekretaris', Nama: 'Rolyndiah Afriliani, SST', Jabatan: 'Sekretaris' },
@@ -468,9 +485,6 @@
             { Divisi: 'Seksi Penelitian dan Pengembangan Organisasi', Nama: 'Miftahul Jannah, S.S.T., MKM', Jabatan: 'Anggota' }
         ];
 
-        // ============================================================
-        //  FUNGSI UTAMA
-        // ============================================================
         async function loadData() {
             try {
                 const [infoRes, beritaRes, eventRes, konsulRes, karyaRes, profilRes] = await Promise.all([
@@ -545,18 +559,12 @@
             return result;
         }
 
-        // ============================================================
-        //  UPDATE INFO (semua teks dinamis)
-        // ============================================================
         function updateInfo(data) {
             const info = {};
             data.forEach(item => { info[item.Key] = item.Value; });
 
-            // Hero
             document.getElementById('heroBadge').textContent = info.hero_badge || 'Ikatan Bidan Indonesia';
             document.getElementById('heroTitle').textContent = info.hero_title || 'IBI Ranting Raflesia';
-
-            // Judul & deskripsi section
             document.getElementById('profilTitle').textContent = info.profil_title || 'Galeri & Struktur Organisasi';
             document.getElementById('profilSub').textContent = info.profil_sub || 'Dokumentasi kegiatan dan susunan pengurus IBI Ranting Raflesia Kota Bengkulu.';
             document.getElementById('beritaTitle').textContent = info.berita_title || 'Berita Terkini';
@@ -572,25 +580,18 @@
             document.getElementById('kontakTitle').textContent = info.kontak_title || 'Kontak Kami';
             document.getElementById('kontakDesc').textContent = info.kontak_desc || 'Hubungi kami untuk informasi lebih lanjut.';
 
-            // Alamat & email
             if (info.alamat) document.getElementById('alamat').innerHTML = info.alamat.replace(/\n/g, '<br>');
             if (info.email) {
                 document.getElementById('email').textContent = info.email;
                 document.getElementById('email').href = `mailto:${info.email}`;
             }
-
-            // Media sosial
             if (info.instagram) document.getElementById('sosmedInstagram').href = info.instagram;
             if (info.facebook) document.getElementById('sosmedFacebook').href = info.facebook;
             if (info.website_pusat) {
                 document.getElementById('websitePusat').textContent = info.website_pusat.replace(/^https?:\/\//, '');
                 document.getElementById('websitePusat').href = info.website_pusat;
             }
-
-            // Footer
             if (info.footer_text) document.getElementById('footerText').textContent = info.footer_text;
-
-            // Galeri foto
             if (info.foto_kiri) document.getElementById('fotoKiri').src = info.foto_kiri;
             if (info.foto_kanan) document.getElementById('fotoKanan').src = info.foto_kanan;
             if (info.caption_kiri_title) document.getElementById('captionKiriTitle').textContent = info.caption_kiri_title;
@@ -599,9 +600,6 @@
             if (info.caption_kanan_desc) document.getElementById('captionKananDesc').textContent = info.caption_kanan_desc;
         }
 
-        // ============================================================
-        //  UPDATE PROFIL (STRUKTUR)
-        // ============================================================
         function updateProfil(data) {
             const container = document.getElementById('profilContainer');
             let strukturData = data.filter(item => item.Tipe && item.Tipe.toLowerCase() === 'struktur');
@@ -624,7 +622,6 @@
             const urutanSeksi = ['Seksi Humas dan Advokasi', 'Seksi Pendidikan dan Pelatihan', 'Seksi Pelayanan', 'Seksi Penelitian dan Pengembangan Organisasi'];
 
             let html = '';
-            // Utama
             html += `<div class="struktur-utama">`;
             urutanUtama.forEach(divisi => {
                 if (grouped[divisi]) {
@@ -640,7 +637,6 @@
             });
             html += `</div>`;
 
-            // Seksi
             html += `<div class="struktur-seksi">`;
             urutanSeksi.forEach(divisi => {
                 if (grouped[divisi]) {
@@ -656,7 +652,6 @@
                     delete grouped[divisi];
                 }
             });
-            // Sisa divisi lain
             Object.keys(grouped).forEach(divisi => {
                 html += `
                     <div class="struktur-card">
@@ -686,9 +681,6 @@
             return map[divisi] || 'fa-users';
         }
 
-        // ============================================================
-        //  UPDATE BERITA, EVENT, KONSUL, KARYA
-        // ============================================================
         function updateBerita(data) {
             const container = document.getElementById('beritaContainer');
             if (data.length === 0) {
@@ -802,9 +794,6 @@
             `).join('');
         }
 
-        // ============================================================
-        //  SCROLL & MENU
-        // ============================================================
         const header = document.getElementById('header');
         const topBtn = document.getElementById('topBtn');
         window.addEventListener('scroll', () => {
@@ -818,7 +807,7 @@
         function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
 
         document.addEventListener('DOMContentLoaded', loadData);
-        setInterval(loadData, 300000); // refresh otomatis tiap 5 menit
+        setInterval(loadData, 300000);
     </script>
 </body>
 </html>
