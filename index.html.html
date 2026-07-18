@@ -159,7 +159,7 @@
         .grid { display:grid; gap:26px; }
         .g-3 { grid-template-columns:repeat(3,1fr); }
         .g-2 { grid-template-columns:repeat(2,1fr); }
-        .card { background:var(--card); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; transition:.35s; display:flex; flex-direction:column; height:100%; }
+        .card { background:var(--card); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; transition:.35s; display:flex; flex-direction:column; height:100%; cursor:pointer; }
         .card:hover { transform:translateY(-6px); box-shadow:var(--shadow-hover); }
         .card .media { 
             height:200px; 
@@ -228,6 +228,138 @@
             border-top:1px solid var(--border);
         }
         .card .meta i { margin-right:5px; }
+        .card .read-more {
+            display:inline-block;
+            margin-top:8px;
+            color:var(--primary);
+            font-weight:600;
+            font-size:13px;
+            transition:.3s;
+        }
+        .card .read-more i {
+            transition:.3s;
+            margin-left:4px;
+        }
+        .card:hover .read-more i {
+            transform:translateX(4px);
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.6);
+            z-index:99999;
+            display:none;
+            justify-content:center;
+            align-items:center;
+            padding:20px;
+            backdrop-filter:blur(4px);
+            animation:fadeIn .3s ease;
+        }
+        .modal-overlay.active {
+            display:flex;
+        }
+        @keyframes fadeIn {
+            from { opacity:0; transform:scale(0.95); }
+            to { opacity:1; transform:scale(1); }
+        }
+        .modal-content {
+            background:#fff;
+            border-radius:20px;
+            max-width:720px;
+            width:100%;
+            max-height:90vh;
+            overflow-y:auto;
+            padding:40px;
+            position:relative;
+            box-shadow:0 30px 80px rgba(0,0,0,.3);
+            animation:slideUp .3s ease;
+        }
+        @keyframes slideUp {
+            from { opacity:0; transform:translateY(30px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+        .modal-content .close-btn {
+            position:sticky;
+            top:0;
+            float:right;
+            width:40px;
+            height:40px;
+            border-radius:50%;
+            background:var(--primary);
+            color:#fff;
+            border:none;
+            font-size:18px;
+            cursor:pointer;
+            transition:.3s;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin-left:auto;
+            margin-bottom:16px;
+            flex-shrink:0;
+        }
+        .modal-content .close-btn:hover {
+            background:var(--accent);
+            color:var(--primary);
+            transform:rotate(90deg);
+        }
+        .modal-content .modal-img {
+            width:100%;
+            max-height:300px;
+            object-fit:cover;
+            border-radius:12px;
+            margin-bottom:20px;
+        }
+        .modal-content .modal-img-placeholder {
+            width:100%;
+            height:200px;
+            background:linear-gradient(135deg,var(--light),#e8ddd0);
+            border-radius:12px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:64px;
+            color:var(--primary);
+            opacity:0.4;
+            margin-bottom:20px;
+        }
+        .modal-content .modal-title {
+            font-size:24px;
+            font-weight:700;
+            color:var(--primary);
+            margin-bottom:12px;
+            line-height:1.3;
+        }
+        .modal-content .modal-meta {
+            display:flex;
+            gap:20px;
+            font-size:13px;
+            color:var(--muted);
+            margin-bottom:16px;
+            flex-wrap:wrap;
+        }
+        .modal-content .modal-meta i {
+            margin-right:6px;
+        }
+        .modal-content .modal-body {
+            font-size:15px;
+            color:#2b1a20;
+            line-height:1.8;
+            white-space:pre-wrap;
+        }
+        .modal-content .modal-body p {
+            margin-bottom:12px;
+        }
+        .modal-content .modal-body::-webkit-scrollbar {
+            width:4px;
+        }
+        .modal-content .modal-body::-webkit-scrollbar-thumb {
+            background:var(--accent);
+            border-radius:4px;
+        }
+
         .struktur-wrapper { margin-top:10px; }
         .struktur-utama { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:30px; }
         .struktur-utama .struktur-card { background:linear-gradient(135deg,var(--primary),var(--primary-2)); color:#fff; border-radius:16px; padding:28px 20px; text-align:center; box-shadow:var(--shadow); transition:.3s; }
@@ -305,7 +437,20 @@
         .top.show { opacity:1; visibility:visible; }
         .top:hover { background:var(--accent); color:var(--primary); transform:translateY(-4px); }
         @media (max-width:960px) { .g-3 { grid-template-columns:repeat(2,1fr); } }
-        @media (max-width:720px) { .nav-links { display:none; } .menu-btn { display:block; } .g-3,.g-2 { grid-template-columns:1fr; } section.sec { padding:60px 0; } .hero { padding:110px 0 70px; min-height:auto; } .contact-card { padding:24px; } .pendaftaran-box { padding:24px 16px; } .pendaftaran-box .btn-group .btn { min-width:100%; } .konsul .konsul-header { flex-direction:column; text-align:center; } .konsul .spesialisasi { align-self:center; } }
+        @media (max-width:720px) { 
+            .nav-links { display:none; } 
+            .menu-btn { display:block; } 
+            .g-3,.g-2 { grid-template-columns:1fr; } 
+            section.sec { padding:60px 0; } 
+            .hero { padding:110px 0 70px; min-height:auto; } 
+            .contact-card { padding:24px; } 
+            .pendaftaran-box { padding:24px 16px; } 
+            .pendaftaran-box .btn-group .btn { min-width:100%; } 
+            .konsul .konsul-header { flex-direction:column; text-align:center; } 
+            .konsul .spesialisasi { align-self:center; }
+            .modal-content { padding:24px; margin:10px; }
+            .modal-content .modal-title { font-size:20px; }
+        }
     </style>
 </head>
 <body>
@@ -348,6 +493,17 @@
                 <li><a href="#kontak" onclick="closeMenu()">Kontak</a></li>
             </ul>
         </aside>
+    </div>
+
+    <!-- MODAL BERITA -->
+    <div class="modal-overlay" id="beritaModal" onclick="if(event.target===this) closeModal()">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div id="modalImage"></div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-meta" id="modalMeta"></div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
     </div>
 
     <section class="hero" id="beranda">
@@ -518,14 +674,15 @@
             { Divisi: 'Seksi Penelitian dan Pengembangan Organisasi', Nama: 'Miftahul Jannah, S.S.T., MKM', Jabatan: 'Anggota' }
         ];
 
+        // Data berita untuk modal
+        let beritaDataStore = [];
+
         // Fungsi untuk mengkonversi URL Google Drive ke format yang bisa ditampilkan
         function convertGoogleDriveUrl(url) {
             if (!url) return '';
             
-            // Jika sudah dalam format export view, langsung return
             if (url.includes('uc?export=view&id=')) return url;
             
-            // Ekstrak ID dari URL Google Drive
             const patterns = [
                 /\/file\/d\/([^\/]+)\//,
                 /\/uc\?id=([^&]+)/,
@@ -539,9 +696,57 @@
                 }
             }
             
-            // Jika tidak cocok dengan pola, return URL asli
             return url;
         }
+
+        // Fungsi untuk membuka modal berita
+        function openBerita(index) {
+            const data = beritaDataStore[index];
+            if (!data) return;
+
+            const modal = document.getElementById('beritaModal');
+            const title = document.getElementById('modalTitle');
+            const meta = document.getElementById('modalMeta');
+            const body = document.getElementById('modalBody');
+            const image = document.getElementById('modalImage');
+
+            title.textContent = data.Judul || 'Berita';
+
+            let fotoUrl = data.Foto || data.Gambar || '';
+            if (fotoUrl) {
+                fotoUrl = convertGoogleDriveUrl(fotoUrl);
+            }
+            const hasImage = fotoUrl && fotoUrl.trim() !== '' && 
+                           (fotoUrl.startsWith('http://') || fotoUrl.startsWith('https://'));
+
+            if (hasImage) {
+                image.innerHTML = `<img src="${fotoUrl}" alt="${data.Judul || 'Berita'}" class="modal-img" onerror="this.style.display='none';">`;
+            } else {
+                image.innerHTML = `<div class="modal-img-placeholder"><i class="fas fa-newspaper"></i></div>`;
+            }
+
+            const tanggal = data.Tanggal || '';
+            const views = data.Views || '0';
+            meta.innerHTML = `
+                ${tanggal ? `<span><i class="far fa-calendar"></i> ${tanggal}</span>` : ''}
+                <span><i class="far fa-eye"></i> ${views} dilihat</span>
+            `;
+
+            body.innerHTML = `<p>${data.Deskripsi || 'Tidak ada deskripsi.'}</p>`;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('beritaModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Tutup modal dengan tombol ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
 
         async function loadData() {
             try {
@@ -560,6 +765,9 @@
                 const konsulData = parseCSV(konsulRes.data);
                 const karyaData = parseCSV(karyaRes.data);
                 const profilData = parseCSV(profilRes.data);
+
+                // Simpan data berita untuk modal
+                beritaDataStore = beritaData;
 
                 updateInfo(infoData);
                 updateBerita(beritaData);
@@ -740,12 +948,13 @@
                 return;
             }
             
-            // Filter data aktif
             const aktif = data.filter(item => (item.Status || '').toLowerCase() === 'aktif' || !item.Status);
             const latest = aktif.slice(0, 3);
             
-            container.innerHTML = latest.map((item) => {
-                // Konversi URL Google Drive
+            container.innerHTML = latest.map((item, index) => {
+                // Cari index asli di data
+                const originalIndex = data.indexOf(item);
+                
                 let fotoUrl = item['Foto'] || item['Gambar'] || '';
                 if (fotoUrl) {
                     fotoUrl = convertGoogleDriveUrl(fotoUrl);
@@ -767,7 +976,7 @@
                 const views = item.Views || '0';
                 
                 return `
-                    <article class="card">
+                    <article class="card" onclick="openBerita(${originalIndex})">
                         <div class="media">
                             ${imgHtml}
                         </div>
@@ -778,6 +987,7 @@
                                 ${tanggal ? `<span><i class="far fa-calendar"></i> ${tanggal}</span>` : ''}
                                 <span><i class="far fa-eye"></i> ${views}</span>
                             </div>
+                            <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
                         </div>
                     </article>
                 `;
