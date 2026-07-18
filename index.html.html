@@ -14,7 +14,7 @@
     <meta name="author" content="IBI Ranting Raflesia Kota Bengkulu" />
     <link rel="canonical" href="https://ibirantingraflesiakotabengkulu.vercel.app/" />
     
-    <!-- SITEMAP JSON-LD (CARA PALING CEPAT) -->
+    <!-- SITEMAP JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -546,6 +546,31 @@
             { Divisi: 'Seksi Penelitian dan Pengembangan Organisasi', Nama: 'Miftahul Jannah, S.S.T., MKM', Jabatan: 'Anggota' }
         ];
 
+        // Fungsi untuk mengkonversi URL Google Drive ke format yang bisa ditampilkan
+        function convertGoogleDriveUrl(url) {
+            if (!url) return '';
+            
+            // Jika sudah dalam format export view, langsung return
+            if (url.includes('uc?export=view&id=')) return url;
+            
+            // Ekstrak ID dari URL Google Drive
+            const patterns = [
+                /\/file\/d\/([^\/]+)\//,
+                /\/uc\?id=([^&]+)/,
+                /id=([^&]+)/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) {
+                    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                }
+            }
+            
+            // Jika tidak cocok dengan pola, return URL asli
+            return url;
+        }
+
         async function loadData() {
             try {
                 const [infoRes, beritaRes, eventRes, konsulRes, karyaRes, profilRes] = await Promise.all([
@@ -749,11 +774,17 @@
                 return;
             }
             
+            // Filter data aktif
             const aktif = data.filter(item => (item.Status || '').toLowerCase() === 'aktif' || !item.Status);
             const latest = aktif.slice(0, 3);
             
             container.innerHTML = latest.map((item) => {
-                const fotoUrl = item['Foto'] || item['Gambar'] || '';
+                // Konversi URL Google Drive
+                let fotoUrl = item['Foto'] || item['Gambar'] || '';
+                if (fotoUrl) {
+                    fotoUrl = convertGoogleDriveUrl(fotoUrl);
+                }
+                
                 const hasImage = fotoUrl && fotoUrl.trim() !== '' && 
                                (fotoUrl.startsWith('http://') || fotoUrl.startsWith('https://'));
                 
